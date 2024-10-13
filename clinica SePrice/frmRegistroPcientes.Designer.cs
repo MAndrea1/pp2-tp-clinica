@@ -30,17 +30,19 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRegistroPcientes));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.txtNombreP = new System.Windows.Forms.TextBox();
+            this.txtApellidoP = new System.Windows.Forms.TextBox();
+            this.txtDNIP = new System.Windows.Forms.TextBox();
             this.rbtnPrepaga = new System.Windows.Forms.RadioButton();
             this.rbtnParticular = new System.Windows.Forms.RadioButton();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.txtNacionalidadP = new System.Windows.Forms.TextBox();
             this.btnRegistrarPaciente = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cbGeneroP = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,26 +56,26 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // textBox1
+            // txtNombreP
             // 
-            this.textBox1.Location = new System.Drawing.Point(366, 97);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(137, 20);
-            this.textBox1.TabIndex = 1;
+            this.txtNombreP.Location = new System.Drawing.Point(366, 97);
+            this.txtNombreP.Name = "txtNombreP";
+            this.txtNombreP.Size = new System.Drawing.Size(137, 20);
+            this.txtNombreP.TabIndex = 1;
             // 
-            // textBox2
+            // txtApellidoP
             // 
-            this.textBox2.Location = new System.Drawing.Point(366, 145);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(137, 20);
-            this.textBox2.TabIndex = 2;
+            this.txtApellidoP.Location = new System.Drawing.Point(366, 145);
+            this.txtApellidoP.Name = "txtApellidoP";
+            this.txtApellidoP.Size = new System.Drawing.Size(137, 20);
+            this.txtApellidoP.TabIndex = 2;
             // 
-            // textBox3
+            // txtDNIP
             // 
-            this.textBox3.Location = new System.Drawing.Point(366, 195);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(137, 20);
-            this.textBox3.TabIndex = 3;
+            this.txtDNIP.Location = new System.Drawing.Point(366, 195);
+            this.txtDNIP.Name = "txtDNIP";
+            this.txtDNIP.Size = new System.Drawing.Size(137, 20);
+            this.txtDNIP.TabIndex = 3;
             // 
             // rbtnPrepaga
             // 
@@ -97,12 +99,12 @@
             this.rbtnParticular.Text = "PARTICULAR";
             this.rbtnParticular.UseVisualStyleBackColor = true;
             // 
-            // textBox4
+            // txtNacionalidadP
             // 
-            this.textBox4.Location = new System.Drawing.Point(366, 249);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(137, 20);
-            this.textBox4.TabIndex = 6;
+            this.txtNacionalidadP.Location = new System.Drawing.Point(366, 249);
+            this.txtNacionalidadP.Name = "txtNacionalidadP";
+            this.txtNacionalidadP.Size = new System.Drawing.Size(137, 20);
+            this.txtNacionalidadP.TabIndex = 6;
             // 
             // btnRegistrarPaciente
             // 
@@ -112,6 +114,7 @@
             this.btnRegistrarPaciente.TabIndex = 7;
             this.btnRegistrarPaciente.Text = "REGISTRAR PACIENTE";
             this.btnRegistrarPaciente.UseVisualStyleBackColor = true;
+            this.btnRegistrarPaciente.Click += new System.EventHandler(this.btnRegistrarPaciente_Click);
             // 
             // label1
             // 
@@ -149,23 +152,47 @@
             this.label4.TabIndex = 11;
             this.label4.Text = "NACIONALIDAD";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(273, 300);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "GÉNERO";
+            // 
+            // cbGeneroP
+            // 
+            this.cbGeneroP.FormattingEnabled = true;
+            this.cbGeneroP.Items.AddRange(new object[] {
+            "Femenino",
+            "Masculino",
+            "Otro"});
+            this.cbGeneroP.Location = new System.Drawing.Point(366, 300);
+            this.cbGeneroP.Name = "cbGeneroP";
+            this.cbGeneroP.Size = new System.Drawing.Size(121, 21);
+            this.cbGeneroP.TabIndex = 13;
+            this.cbGeneroP.Text = "Seleccionar";
+            // 
             // frmRegistroPcientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSlateGray;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cbGeneroP);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnRegistrarPaciente);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.txtNacionalidadP);
             this.Controls.Add(this.rbtnParticular);
             this.Controls.Add(this.rbtnPrepaga);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtDNIP);
+            this.Controls.Add(this.txtApellidoP);
+            this.Controls.Add(this.txtNombreP);
             this.Controls.Add(this.pictureBox1);
             this.Name = "frmRegistroPcientes";
             this.Text = "frmRegistroPcientes";
@@ -178,16 +205,18 @@
         #endregion
 
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtNombreP;
+        private System.Windows.Forms.TextBox txtApellidoP;
+        private System.Windows.Forms.TextBox txtDNIP;
         private System.Windows.Forms.RadioButton rbtnPrepaga;
         private System.Windows.Forms.RadioButton rbtnParticular;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtNacionalidadP;
         private System.Windows.Forms.Button btnRegistrarPaciente;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cbGeneroP;
     }
 }
