@@ -17,8 +17,8 @@ namespace clinica_SePrice
             DataTable dataTable = new DataTable();
             Usuario usuario = new Usuario();
 
-            // Llamar al método Log_Usu que ejecuta el procedure de la DB
-            dataTable = usuario.Log_Usu(txtUsuarioAdmin.Text, txtPasswordAdmin.Text, 120);
+                // Llamar al método Log_Usu que ejecuta el procedure de la DB
+                dataTable = usuario.Log_Usu(txtUsuarioAdmin.Text, txtPasswordAdmin.Text, 120);
 
             // Validar que devuelva algo
             if (dataTable.Rows.Count > 0)

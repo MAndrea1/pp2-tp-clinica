@@ -49,6 +49,11 @@ create table pacientes(
     constraint pk_pacientes primary key (Dni)
 );
 
+INSERT INTO pacientes (Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga) VALUES
+('Maria', 'Fernandez', 123456, 'Masculino', 'Argentina', true),
+('Laura', 'Gomez', 78910, 'Otro', 'Argentina', false);
+
+
 delimiter //
 drop procedure if exists IngresoLogin//
 CREATE PROCEDURE `IngresoLogin`(in Usu varchar(20), in Pass varchar(15), in RolUsu int)
@@ -74,3 +79,12 @@ BEGIN
 END;
 //
 DELIMITER ;
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarPaciente // 
+CREATE PROCEDURE BuscarPaciente(in Doc int)
+BEGIN
+select Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga
+from pacientes p 
+where p.Dni = Doc;
+END
+//

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
 namespace clinica_SePrice.Datos
@@ -43,6 +44,47 @@ namespace clinica_SePrice.Datos
                     }
                 }
             }
+        }
+
+        public DataTable BuscarPaciente(int dni)
+        {
+            DataTable pacienteData = new DataTable();
+
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+                try
+                {
+                    using (MySqlCommand comando = new MySqlCommand("BuscarPaciente", conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("Doc", dni);
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+
+                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        {
+                            pacienteData.Load(reader); // Cargar los resultados en el DataTable
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex; // Manejo de excepciones
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
+
+            return pacienteData; // Retornar los datos del paciente
         }
     }
 }

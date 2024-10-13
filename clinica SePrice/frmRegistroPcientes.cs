@@ -21,6 +21,24 @@ namespace clinica_SePrice
         private void btnRegistrarPaciente_Click(object sender, EventArgs e)
         {
             {
+ 
+
+                // Si todas las validaciones son exitosas, crear el paciente
+                var paciente = new Pacientes();
+                if (int.TryParse(txtDNIP.Text, out int dni))
+                {
+                    DataTable resultado = paciente.BuscarPaciente(dni);
+
+                    if (resultado.Rows.Count > 0)
+
+                        MessageBox.Show("El paciente ya existe con ese DNI");
+                }
+         
+                else
+                {
+                    MessageBox.Show("Por favor, ingrese un D.N.I. válido.");
+                }
+
                 // Validar los campos
                 string error = ValidateFields();
                 if (error != null)
@@ -28,12 +46,19 @@ namespace clinica_SePrice
                     MessageBox.Show(error);
                     return;
                 }
+                else
+                {
+                    try
+                    {
+                        paciente.AgregarPaciente(txtNombreP.Text, txtApellidoP.Text, int.Parse(txtDNIP.Text), cbGeneroP.Text, txtNacionalidadP.Text, rbtnPrepaga.Checked);
+                        MessageBox.Show("Paciente registrado con éxito.");
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show("Hubo un error, vuelva a intentar");
+                    }
 
-                // Si todas las validaciones son exitosas, crear el paciente
-                var paciente = new Pacientes();
-                paciente.AgregarPaciente(txtNombreP.Text, txtApellidoP.Text, int.Parse(txtDNIP.Text), cbGeneroP.Text, txtNacionalidadP.Text, true);
+                }
 
-                MessageBox.Show("Paciente registrado con éxito.");
             }
 
             string ValidateFields()
