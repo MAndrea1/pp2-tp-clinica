@@ -10,7 +10,8 @@ namespace clinica_SePrice.Datos
         public DataTable Log_Usu(string L_Usu, string P_Usu, int rolUsu)
         {
             DataTable tabla = new DataTable();
-            using (MySqlConnection conexion = Conexion.getInstancia().CrearConexion())
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
                 try
                 {
                     using (MySqlCommand comando = new MySqlCommand("IngresoLogin", conexion))
@@ -44,7 +45,8 @@ namespace clinica_SePrice.Datos
                         conexion.Close();
                     }
                 }
-        }
+            }
 
+        }
     }
 }

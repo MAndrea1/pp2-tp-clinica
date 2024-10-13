@@ -124,7 +124,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "frmLoginAdmin";
             this.Text = "frmLoginAdmin";
-            this.Load += new System.EventHandler(this.frmLoginAdmin_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
