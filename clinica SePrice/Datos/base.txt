@@ -1,0 +1,36 @@
+drop database if exists clinicaSePrice;
+create database clinicaSePrice;
+use clinicaSePrice;
+
+create table roles(
+RolUsu int,
+NomRol varchar(30),
+constraint primary key(RolUsu)
+);
+
+insert into roles values
+(120,'Administrador'),
+(121,'Medico');
+
+create table usuario(
+CodUsu int auto_increment,
+NombreUsu varchar (20),
+PassUsu varchar (15),
+RolUsu int,
+constraint pk_usuario primary key (CodUsu),
+constraint fk_usuario foreign key(RolUsu) references roles(RolUsu)
+);
+
+insert into usuario(CodUsu,NombreUsu,PassUsu,RolUsu) values
+(1,'Admin','123',120),
+(2,'Medico','123',121);
+
+delimiter //
+drop procedure if exists IngresoLogin//
+CREATE PROCEDURE `IngresoLogin`(in Usu varchar(20), in Pass varchar(15), in RolUsu int)
+BEGIN
+	select CodUsu
+    from usuario u
+    where u.NombreUsu = Usu and u.PassUsu = Pass and RolUsu = u.RolUsu;
+END;
+//
