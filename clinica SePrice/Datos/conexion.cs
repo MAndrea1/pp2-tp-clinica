@@ -28,11 +28,11 @@ namespace clinica_SePrice.Datos
             while (correcto != true)
             {
                 // Armamos los cuadros de dialogo para el ingreso de datos
-                T_baseDatos = Microsoft.VisualBasic.Interaction.InputBox("ingrese el nombre de la base de datos", "DATOS DE INSTALACIÓN MySQL");
-                T_servidor = Microsoft.VisualBasic.Interaction.InputBox("ingrese servidor", "DATOS DE INSTALACIÓN MySQL");
-                T_puerto = Microsoft.VisualBasic.Interaction.InputBox("ingrese puerto", "DATOS DE INSTALACIÓN MySQL");
-                T_usuario = Microsoft.VisualBasic.Interaction.InputBox("ingrese usuario", "DATOS DE INSTALACIÓN MySQL");
-                T_clave = Microsoft.VisualBasic.Interaction.InputBox("ingrese clave", "DATOS DE INSTALACIÓN MySQL");
+                T_baseDatos = Microsoft.VisualBasic.Interaction.InputBox("ingrese el nombre de la base de datos", "DATOS DE INSTALACIÓN MySQL", "clinicaSePrice");
+                T_servidor = Microsoft.VisualBasic.Interaction.InputBox("ingrese servidor", "DATOS DE INSTALACIÓN MySQL", "localhost");
+                T_puerto = Microsoft.VisualBasic.Interaction.InputBox("ingrese puerto", "DATOS DE INSTALACIÓN MySQL", "3306");
+                T_usuario = Microsoft.VisualBasic.Interaction.InputBox("ingrese usuario", "DATOS DE INSTALACIÓN MySQL", "root");
+                T_clave = Microsoft.VisualBasic.Interaction.InputBox("ingrese clave", "DATOS DE INSTALACIÓN MySQL", "");
 
                 mensaje = (int)MessageBox.Show("su ingreso: SERVIDOR = " +
                 T_servidor + " PUERTO= " + T_puerto + " USUARIO: " +

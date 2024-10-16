@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using clinica_SePrice;
+using clinica_SePrice.Datos;
+using MySql.Data.MySqlClient;
 
 namespace clinica_SePrice
 {
@@ -38,6 +40,11 @@ namespace clinica_SePrice
 
             frmadministrativo.Show();
             this.Hide();
+        }
+
+        private void frmBienvenida_Load(object sender, EventArgs e)
+        {
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar());
         }
     }
     

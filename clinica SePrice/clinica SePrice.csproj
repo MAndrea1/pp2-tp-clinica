@@ -100,7 +100,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datos\conexion.cs" />
+    <Compile Include="Datos\Pacientes.cs" />
     <Compile Include="Datos\Usuario.cs" />
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmAcreditacionTurno.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +170,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmAcreditacionTurno.resx">
       <DependentUpon>frmAcreditacionTurno.cs</DependentUpon>
     </EmbeddedResource>
