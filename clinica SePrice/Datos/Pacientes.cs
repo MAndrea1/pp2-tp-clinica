@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System.Data;
+using System;
+
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;

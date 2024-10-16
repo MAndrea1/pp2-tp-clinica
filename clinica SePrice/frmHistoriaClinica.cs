@@ -1,5 +1,4 @@
-﻿using clinica_SePrice.Entidades;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
