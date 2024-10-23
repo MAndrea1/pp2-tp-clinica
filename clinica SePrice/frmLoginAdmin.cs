@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using clinica_SePrice;
+using clinica_SePrice.Datos;
+
 
 namespace clinica_SePrice
 {
@@ -17,22 +12,26 @@ namespace clinica_SePrice
         {
             InitializeComponent();
         }
-
-        private void frmLoginAdmin_Load(object sender, EventArgs e)
-        {
-
-        }
-       
-        private void btnAceptar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-            frmAdministrativoMenu frmAdministrativoMenu = new frmAdministrativoMenu();
-            frmAdministrativoMenu.ShowDialog();
-            this.Close();
+            DataTable dataTable = new DataTable();
+            Usuario usuario = new Usuario();
+
+                // Llamar al método Log_Usu que ejecuta el procedure de la DB
+                dataTable = usuario.Log_Usu(txtUsuarioAdmin.Text, txtPasswordAdmin.Text, 120);
+
+            // Validar que devuelva algo
+            if (dataTable.Rows.Count > 0)
+            {
+                // Crear y empezar un nuevo subproceso para abrir del admin
+                frmAdministrativoMenu frmAdministrativoMenu = new frmAdministrativoMenu();
+                frmAdministrativoMenu.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Usuario y/o contraseña incorrecto");
+            }
         }
     }
 }

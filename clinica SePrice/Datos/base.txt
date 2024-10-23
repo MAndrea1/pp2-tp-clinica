@@ -1,0 +1,90 @@
+drop database if exists clinicaSePrice;
+create database clinicaSePrice;
+use clinicaSePrice;
+
+create table roles(
+RolUsu int,
+NomRol varchar(30),
+constraint primary key(RolUsu)
+);
+
+insert into roles values
+(120,'Administrador'),
+(121,'Medico');
+
+create table usuario(
+CodUsu int auto_increment,
+NombreUsu varchar (20),
+PassUsu varchar (15),
+RolUsu int,
+constraint pk_usuario primary key (CodUsu),
+constraint fk_usuario foreign key(RolUsu) references roles(RolUsu)
+);
+
+insert into usuario(CodUsu,NombreUsu,PassUsu,RolUsu) values
+(1,'Admin','123',120),
+(2,'Medico','123',121),
+(3,'Med','123',121);
+
+CREATE TABLE medicos (
+    CodUsu int,
+    Nombre varchar(30),
+    Apellido varchar(30),
+    Especialidad varchar(50),
+    constraint pk_medicos primary key (CodUsu),
+    constraint fk_medicos_usuario foreign key (CodUsu) references usuario(CodUsu)
+);
+
+INSERT INTO medicos (CodUsu, Nombre, Apellido, Especialidad) VALUES
+(2, 'Maria', 'Fernandez', 'Cardiología'),
+(3, 'Laura', 'Gomez', 'Pediatría');
+
+create table pacientes(
+    Nombre varchar(30),
+    Apellido varchar(30),
+    Dni int,
+    Genero varchar(30),
+    Nacionalidad varchar(30),
+    Prepaga boolean,
+    constraint pk_pacientes primary key (Dni)
+);
+
+INSERT INTO pacientes (Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga) VALUES
+('Maria', 'Fernandez', 123456, 'Masculino', 'Argentina', true),
+('Laura', 'Gomez', 78910, 'Otro', 'Argentina', false);
+
+
+delimiter //
+drop procedure if exists IngresoLogin//
+CREATE PROCEDURE `IngresoLogin`(in Usu varchar(20), in Pass varchar(15), in RolUsu int)
+BEGIN
+	select CodUsu
+    from usuario u
+    where u.NombreUsu = Usu and u.PassUsu = Pass and RolUsu = u.RolUsu;
+END;
+//
+DELIMITER //
+DROP PROCEDURE IF EXISTS InsertarPaciente //
+CREATE PROCEDURE InsertarPaciente(
+    IN p_Nombre VARCHAR(30),
+    IN p_Apellido VARCHAR(30),
+    IN p_Dni INT,
+    IN p_Genero VARCHAR(30),
+    IN p_Nacionalidad VARCHAR(30),
+    IN p_Prepaga BOOLEAN
+)
+BEGIN
+    INSERT INTO pacientes (Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga)
+    VALUES (p_Nombre, p_Apellido, p_Dni, p_Genero, p_Nacionalidad, p_Prepaga);
+END;
+//
+DELIMITER ;
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarPaciente // 
+CREATE PROCEDURE BuscarPaciente(in Doc int)
+BEGIN
+select Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga
+from pacientes p 
+where p.Dni = Doc;
+END
+//

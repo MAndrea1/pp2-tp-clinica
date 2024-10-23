@@ -49,6 +49,7 @@
             this.btnVerHistoriaClinica.TabIndex = 1;
             this.btnVerHistoriaClinica.Text = "Ver Historia Clinica";
             this.btnVerHistoriaClinica.UseVisualStyleBackColor = true;
+            this.btnVerHistoriaClinica.Click += new System.EventHandler(this.btnVerHistoriaClinica_Click);
             // 
             // label1
             // 

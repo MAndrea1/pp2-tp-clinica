@@ -57,6 +57,7 @@
             this.txtUsuarioMedico.Name = "txtUsuarioMedico";
             this.txtUsuarioMedico.Size = new System.Drawing.Size(165, 20);
             this.txtUsuarioMedico.TabIndex = 1;
+           
             // 
             // txtPasswordMedico
             // 
@@ -74,7 +75,6 @@
             this.lblUsuarioMedico.Size = new System.Drawing.Size(57, 17);
             this.lblUsuarioMedico.TabIndex = 3;
             this.lblUsuarioMedico.Text = "Usuario";
-            this.lblUsuarioMedico.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblPasswordMedico
             // 
@@ -96,17 +96,6 @@
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
             // 
-            // btnAceptar
-            // 
-            this.btnAceptar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAceptar.Location = new System.Drawing.Point(472, 307);
-            this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(101, 23);
-            this.btnAceptar.TabIndex = 6;
-            this.btnAceptar.Text = "ACEPTAR";
-            this.btnAceptar.UseVisualStyleBackColor = true;
-            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
-            // 
             // btnIngresar
             // 
             this.btnIngresar.BackColor = System.Drawing.Color.Teal;
@@ -117,7 +106,7 @@
             this.btnIngresar.TabIndex = 7;
             this.btnIngresar.Text = "INGRESAR";
             this.btnIngresar.UseVisualStyleBackColor = false;
-            this.btnIngresar.Click += new System.EventHandler(this.btnIngresar_Click);
+            this.btnIngresar.Click += new System.EventHandler(this.BtnIngresar_Click);
             // 
             // FrmLoginMedico
             // 
@@ -135,7 +124,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "FrmLoginMedico";
             this.Text = "FrmLoginMedico";
-            this.Load += new System.EventHandler(this.FrmLoginMedico_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
