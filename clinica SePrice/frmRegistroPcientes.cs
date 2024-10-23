@@ -1,4 +1,5 @@
 ﻿using clinica_SePrice.Datos;
+using clinica_SePrice.Entidades;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,9 +28,9 @@ namespace clinica_SePrice
                 var paciente = new Pacientes();
                 if (int.TryParse(txtDNIP.Text, out int dni))
                 {
-                    DataTable resultado = paciente.BuscarPaciente(dni);
+                    Paciente resultado = paciente.BuscarPaciente(dni);
 
-                    if (resultado.Rows.Count > 0)
+                    if (resultado != null)
 
                         MessageBox.Show("El paciente ya existe con ese DNI");
                 }
