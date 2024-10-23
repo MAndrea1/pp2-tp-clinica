@@ -1,33 +1,29 @@
 ﻿using MySql.Data.MySqlClient;
 using System.Data;
 using System;
-
-using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Windows.Forms;
-using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using clinica_SePrice.Entidades;
 
 namespace clinica_SePrice.Datos
 {
-    internal class Pacientes
+    internal class Turnos
     {
-        public void AgregarPaciente(string nombre, string apellido, int dni, string genero, string nacionalidad, bool prepaga)
+        // Method to add a new appointment
+        public void AgregarTurno(int codTurno, int dni, int codUsu, DateTime fechaTurno, bool acreditacion, TimeSpan horarioTurno)
         {
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
             {
                 try
                 {
-                    using (MySqlCommand comando = new MySqlCommand("InsertarPaciente", conexion))
+                    using (MySqlCommand comando = new MySqlCommand("InsertarTurno", conexion))
                     {
                         comando.CommandType = CommandType.StoredProcedure;
-                        comando.Parameters.AddWithValue("p_Nombre", nombre);
-                        comando.Parameters.AddWithValue("p_Apellido", apellido);
+                        comando.Parameters.AddWithValue("p_CodTurno", codTurno);
                         comando.Parameters.AddWithValue("p_Dni", dni);
-                        comando.Parameters.AddWithValue("p_Genero", genero);
-                        comando.Parameters.AddWithValue("p_Nacionalidad", nacionalidad);
-                        comando.Parameters.AddWithValue("p_Prepaga", prepaga);
+                        comando.Parameters.AddWithValue("p_CodUsu", codUsu);
+                        comando.Parameters.AddWithValue("p_FechaTurno", fechaTurno);
+                        comando.Parameters.AddWithValue("p_Acreditacion", acreditacion);
+                        comando.Parameters.AddWithValue("p_HorarioTurno", horarioTurno);
 
                         if (conexion.State == ConnectionState.Open)
                         {
@@ -50,18 +46,19 @@ namespace clinica_SePrice.Datos
                 }
             }
         }
-        public Paciente BuscarPaciente(int dni)
+
+        public List<Turno> BuscarTurnosPorMedico(int codUsu)
         {
-            Paciente paciente = null;
+            List<Turno> listaTurnos = new List<Turno>();
 
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
             {
                 try
                 {
-                    using (MySqlCommand comando = new MySqlCommand("BuscarPaciente", conexion))
+                    using (MySqlCommand comando = new MySqlCommand("BuscarTurnosPorMedico", conexion))
                     {
                         comando.CommandType = CommandType.StoredProcedure;
-                        comando.Parameters.AddWithValue("Doc", dni);
+                        comando.Parameters.AddWithValue("p_CodUsu", codUsu);
 
                         if (conexion.State == ConnectionState.Open)
                         {
@@ -71,17 +68,19 @@ namespace clinica_SePrice.Datos
 
                         using (MySqlDataReader reader = comando.ExecuteReader())
                         {
-                            if (reader.Read())
+                            while (reader.Read())
                             {
-                                paciente = new Paciente
+                                Turno turno = new Turno
                                 {
-                                    Nombre = reader["Nombre"].ToString(),
-                                    Apellido = reader["Apellido"].ToString(),
+                                    CodTurno = Convert.ToInt32(reader["CodTurno"]),
                                     Dni = Convert.ToInt32(reader["Dni"]),
-                                    Genero = reader["Genero"].ToString(),
-                                    Nacionalidad = reader["Nacionalidad"].ToString(),
-                                    Prepaga = Convert.ToBoolean(reader["Prepaga"])
+                                    CodUsu = codUsu, // Already known from input
+                                    FechaTurno = Convert.ToDateTime(reader["FechaTurno"]),
+                                    Acreditacion = Convert.ToBoolean(reader["Acreditacion"]),
+                                    HorarioTurno = (TimeSpan)reader["HorarioTurno"]
                                 };
+
+                                listaTurnos.Add(turno);
                             }
                         }
                     }
@@ -99,7 +98,7 @@ namespace clinica_SePrice.Datos
                 }
             }
 
-            return paciente;
+            return listaTurnos; // Return the list of appointments
         }
     }
 }

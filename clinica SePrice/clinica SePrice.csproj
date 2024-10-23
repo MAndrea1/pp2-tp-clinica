@@ -100,8 +100,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datos\conexion.cs" />
+    <Compile Include="Datos\Medicos.cs" />
+    <Compile Include="Datos\Turnos.cs" />
     <Compile Include="Datos\Pacientes.cs" />
     <Compile Include="Datos\Usuario.cs" />
+    <Compile Include="Entidades\Paciente.cs" />
+    <Compile Include="Entidades\Medico.cs" />
+    <Compile Include="Entidades\Turno.cs" />
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +207,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmReservaTurno.resx">
       <DependentUpon>frmReservaTurno.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

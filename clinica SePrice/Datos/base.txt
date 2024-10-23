@@ -50,9 +50,25 @@ create table pacientes(
 );
 
 INSERT INTO pacientes (Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga) VALUES
-('Maria', 'Fernandez', 123456, 'Masculino', 'Argentina', true),
-('Laura', 'Gomez', 78910, 'Otro', 'Argentina', false);
+('Mario', 'Rodriguez', 25974152, 'Masculino', 'Argentina', true),
+('Esteban', 'Garcia', 42584952, 'Masculino', 'Argentina', false);
 
+CREATE TABLE turnos (
+    CodTurno int,
+    Dni int,
+    CodUsu int,
+    FechaTurno date,
+    Acreditacion boolean,
+    HorarioTurno time,
+    constraint pk_turnos primary key (CodTurno),
+    constraint fk_turnos_pacientes foreign key (Dni) references pacientes(Dni),
+    constraint fk_turnos_medicos foreign key (CodUsu) references medicos(CodUsu)
+);
+
+INSERT INTO turnos (CodTurno, Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno) VALUES
+(1, 25974152, 2, '2024-10-25', true, '14:30:00'),
+(2, 42584952, 2, '2024-10-25', true, '14:30:00'),
+(3, 25974152, 3, '2024-11-01', false, '10:00:00');
 
 delimiter //
 drop procedure if exists IngresoLogin//
@@ -63,6 +79,7 @@ BEGIN
     where u.NombreUsu = Usu and u.PassUsu = Pass and RolUsu = u.RolUsu;
 END;
 //
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS InsertarPaciente //
 CREATE PROCEDURE InsertarPaciente(
@@ -78,7 +95,7 @@ BEGIN
     VALUES (p_Nombre, p_Apellido, p_Dni, p_Genero, p_Nacionalidad, p_Prepaga);
 END;
 //
-DELIMITER ;
+
 DELIMITER //
 DROP PROCEDURE IF EXISTS BuscarPaciente // 
 CREATE PROCEDURE BuscarPaciente(in Doc int)
@@ -88,3 +105,41 @@ from pacientes p
 where p.Dni = Doc;
 END
 //
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTodosLosMedicos //
+CREATE PROCEDURE BuscarTodosLosMedicos()
+BEGIN
+    SELECT CodUsu, Nombre, Apellido, Especialidad
+    FROM medicos;
+END;
+//
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS InsertarTurno //
+CREATE PROCEDURE InsertarTurno(
+    IN p_CodTurno INT,
+    IN p_Dni INT,
+    IN p_CodUsu INT,
+    IN p_FechaTurno DATE,
+    IN p_Acreditacion BOOLEAN,
+    IN p_HorarioTurno TIME
+)
+BEGIN
+    INSERT INTO turnos (CodTurno, Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno)
+    VALUES (p_CodTurno, p_Dni, p_CodUsu, p_FechaTurno, p_Acreditacion, p_HorarioTurno);
+END;
+//
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTurnosPorMedico //
+CREATE PROCEDURE BuscarTurnosPorMedico(
+    IN p_CodUsu INT
+)
+BEGIN
+    SELECT CodTurno, Dni, FechaTurno, Acreditacion, HorarioTurno
+    FROM turnos
+    WHERE CodUsu = p_CodUsu;
+END;
+//
+DELIMITER ;
