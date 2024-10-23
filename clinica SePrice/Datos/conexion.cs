@@ -2,7 +2,8 @@
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
-namespace clinica_SePrice.Datos
+namespace clinica_SePrice.Datos// Tests....
+
 {
     public class Conexion
     {
