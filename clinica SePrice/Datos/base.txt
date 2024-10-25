@@ -54,7 +54,7 @@ INSERT INTO pacientes (Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga) VAL
 ('Esteban', 'Garcia', 42584952, 'Masculino', 'Argentina', false);
 
 CREATE TABLE turnos (
-    CodTurno int,
+    CodTurno int AUTO_INCREMENT,
     Dni int,
     CodUsu int,
     FechaTurno date,
@@ -66,7 +66,7 @@ CREATE TABLE turnos (
 );
 
 INSERT INTO turnos (CodTurno, Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno) VALUES
-(1, 25974152, 2, '2024-10-25', true, '14:30:00'),
+(1, 25974152, 2, '2024-10-25', true, '09:00:00'),
 (2, 42584952, 2, '2024-10-25', true, '14:30:00'),
 (3, 25974152, 3, '2024-11-01', false, '10:00:00');
 
@@ -118,7 +118,6 @@ END;
 DELIMITER //
 DROP PROCEDURE IF EXISTS InsertarTurno //
 CREATE PROCEDURE InsertarTurno(
-    IN p_CodTurno INT,
     IN p_Dni INT,
     IN p_CodUsu INT,
     IN p_FechaTurno DATE,
@@ -126,8 +125,8 @@ CREATE PROCEDURE InsertarTurno(
     IN p_HorarioTurno TIME
 )
 BEGIN
-    INSERT INTO turnos (CodTurno, Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno)
-    VALUES (p_CodTurno, p_Dni, p_CodUsu, p_FechaTurno, p_Acreditacion, p_HorarioTurno);
+    INSERT INTO turnos (Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno)
+    VALUES (p_Dni, p_CodUsu, p_FechaTurno, p_Acreditacion, p_HorarioTurno);
 END;
 //
 
@@ -140,6 +139,19 @@ BEGIN
     SELECT CodTurno, Dni, FechaTurno, Acreditacion, HorarioTurno
     FROM turnos
     WHERE CodUsu = p_CodUsu;
+END;
+//
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTurnosPorMedicoYFecha //
+CREATE PROCEDURE BuscarTurnosPorMedicoYFecha(
+    IN p_CodUsu INT,
+    IN p_FechaTurno DATE
+)
+BEGIN
+    SELECT CodTurno, Dni, FechaTurno, Acreditacion, HorarioTurno
+    FROM turnos
+    WHERE CodUsu = p_CodUsu AND FechaTurno = p_FechaTurno;
 END;
 //
 DELIMITER ;

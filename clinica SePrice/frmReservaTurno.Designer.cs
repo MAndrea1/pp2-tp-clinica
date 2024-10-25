@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReservaTurno));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "26858969"}, -1, System.Drawing.SystemColors.WindowFrame, System.Drawing.SystemColors.Info, null);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "16358748"}, -1);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -51,6 +51,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.comboBoxHorario = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,7 +90,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(224, 203);
+            this.label5.Location = new System.Drawing.Point(224, 251);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(102, 15);
             this.label5.TabIndex = 11;
@@ -111,11 +113,11 @@
             this.Tarde});
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
-            this.listView1.Location = new System.Drawing.Point(370, 203);
+            listViewItem13,
+            listViewItem14});
+            this.listView1.Location = new System.Drawing.Point(370, 251);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(367, 186);
+            this.listView1.Size = new System.Drawing.Size(367, 138);
             this.listView1.TabIndex = 17;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -164,6 +166,7 @@
             this.btnBuscar.TabIndex = 21;
             this.btnBuscar.Text = "BUSCAR";
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // dateTimePicker1
             // 
@@ -171,15 +174,17 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 22;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // btnGenerarTurno
             // 
-            this.btnGenerarTurno.Location = new System.Drawing.Point(616, 164);
+            this.btnGenerarTurno.Location = new System.Drawing.Point(616, 212);
             this.btnGenerarTurno.Name = "btnGenerarTurno";
             this.btnGenerarTurno.Size = new System.Drawing.Size(121, 23);
             this.btnGenerarTurno.TabIndex = 23;
             this.btnGenerarTurno.Text = "GENERAR TURNO";
             this.btnGenerarTurno.UseVisualStyleBackColor = true;
+            this.btnGenerarTurno.Click += new System.EventHandler(this.btnGenerarTurno_Click);
             // 
             // textBox1
             // 
@@ -187,6 +192,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(121, 20);
             this.textBox1.TabIndex = 24;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // comboBox2
             // 
@@ -206,12 +212,32 @@
             this.label2.TabIndex = 26;
             this.label2.Text = "PROFESIONAL";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(502, 169);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 13);
+            this.label3.TabIndex = 27;
+            this.label3.Text = "HORARIO";
+            // 
+            // comboBoxHorario
+            // 
+            this.comboBoxHorario.FormattingEnabled = true;
+            this.comboBoxHorario.Location = new System.Drawing.Point(616, 169);
+            this.comboBoxHorario.Name = "comboBoxHorario";
+            this.comboBoxHorario.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxHorario.TabIndex = 28;
+            this.comboBoxHorario.SelectedIndexChanged += new System.EventHandler(this.comboBoxHorario_SelectedIndexChanged);
+            // 
             // frmReservaTurno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.comboBoxHorario);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.textBox1);
@@ -252,5 +278,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox comboBoxHorario;
     }
 }
