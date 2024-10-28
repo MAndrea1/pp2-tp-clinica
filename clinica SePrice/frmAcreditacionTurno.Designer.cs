@@ -50,6 +50,7 @@
             this.btnPagar.TabIndex = 0;
             this.btnPagar.Text = "PAGAR";
             this.btnPagar.UseVisualStyleBackColor = true;
+            this.btnPagar.Click += new System.EventHandler(this.btnPagar_Click);
             // 
             // btnConfirmarTurno
             // 

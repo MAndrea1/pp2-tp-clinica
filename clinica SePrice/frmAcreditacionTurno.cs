@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using clinica_SePrice.Datos;
+using clinica_SePrice.Entidades;
 
 namespace clinica_SePrice
 {
@@ -29,6 +31,35 @@ namespace clinica_SePrice
            
             this.Close();
                 
+        }
+
+        private void btnPagar_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(textBox1.Text, out int dni))
+            {
+                var pagos = new Pagos();
+
+                try
+                {
+                    var (costo, codTurno, fechaTurno, horarioTurno, acreditacion, mensaje) = pagos.ProcesarPago(dni);
+                    if (!string.IsNullOrEmpty(mensaje))
+                    {
+                        MessageBox.Show(mensaje); MessageBox.Show(mensaje);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Pago procesado. Costo: ${costo}\nTurno: {codTurno}\nFecha: {fechaTurno.ToShortDateString()}\nHorario: {horarioTurno}\nAcreditación: {acreditacion}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al procesar el pago: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, ingrese un D.N.I. válido.");
+            }
         }
     }
 }

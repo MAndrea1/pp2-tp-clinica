@@ -166,5 +166,13 @@ namespace clinica_SePrice
                 MessageBox.Show("Ocurrió un error al agregar el turno.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            frmAdministrativoMenu frmAdministrativoMenu = new frmAdministrativoMenu();
+            frmAdministrativoMenu.ShowDialog();
+
+            this.Close();
+        }
     }
 }

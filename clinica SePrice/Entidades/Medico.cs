@@ -17,7 +17,7 @@ namespace clinica_SePrice.Entidades
 
         public override string ToString()
         {
-            return $"{this.Nombre} {this.Apellido}";
+            return $"{this.Nombre} {this.Apellido}-  {this.Especialidad}";
         }
     }
 }

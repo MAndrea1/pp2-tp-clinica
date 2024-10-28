@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="Datos\conexion.cs" />
     <Compile Include="Datos\Medicos.cs" />
+    <Compile Include="Datos\Pagos.cs" />
     <Compile Include="Datos\Turnos.cs" />
     <Compile Include="Datos\Pacientes.cs" />
     <Compile Include="Datos\Usuario.cs" />

@@ -46,5 +46,10 @@ namespace clinica_SePrice
             frmRegistroPcientes.Show();
             this.Hide();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

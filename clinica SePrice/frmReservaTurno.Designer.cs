@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmReservaTurno));
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "26858969"}, -1, System.Drawing.SystemColors.WindowFrame, System.Drawing.SystemColors.Info, null);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "16358748"}, -1);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -113,8 +113,8 @@
             this.Tarde});
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14});
+            listViewItem1,
+            listViewItem2});
             this.listView1.Location = new System.Drawing.Point(370, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(367, 138);
@@ -142,6 +142,7 @@
             this.btnVolver.TabIndex = 18;
             this.btnVolver.Text = "VOLVER";
             this.btnVolver.UseVisualStyleBackColor = false;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // comboBox1
             // 

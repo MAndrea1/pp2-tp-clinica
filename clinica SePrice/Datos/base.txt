@@ -154,4 +154,36 @@ BEGIN
     WHERE CodUsu = p_CodUsu AND FechaTurno = p_FechaTurno;
 END;
 //
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS ProcesarPago //
+CREATE PROCEDURE ProcesarPago(
+    IN p_Dni INT
+)
+BEGIN
+    DECLARE p_Costo INT;
+ SELECT CASE WHEN Prepaga THEN 3000 ELSE 6000 END INTO p_Costo
+    FROM pacientes
+    WHERE Dni = p_Dni;
+
+    IF p_Costo IS NULL THEN
+        SELECT 'Paciente no encontrado' AS Mensaje, NULL AS Costo, NULL AS CodTurno, NULL AS FechaTurno, NULL AS HorarioTurno, NULL AS Acreditacion;
+    ELSE
+        -- Verificar si hay turnos registrados para el paciente
+        IF NOT EXISTS (SELECT 1 FROM turnos WHERE Dni = p_Dni) THEN
+            SELECT 'No hay pacientes con turno' AS Mensaje, NULL AS Costo, NULL AS CodTurno, NULL AS FechaTurno, NULL AS HorarioTurno, NULL AS Acreditacion;
+        ELSE
+            -- Actualizar la acreditación en la tabla turnos
+            UPDATE turnos
+            SET Acreditacion = TRUE
+            WHERE Dni = p_Dni AND Acreditacion = FALSE;
+
+            -- Devolver el costo y los datos del turno
+            SELECT NULL AS Mensaje, p_Costo AS Costo, t.CodTurno, t.FechaTurno, t.HorarioTurno, t.Acreditacion
+            FROM turnos t
+            WHERE t.Dni = p_Dni;
+        END IF;
+    END IF;
+END;
+//
 DELIMITER ;
