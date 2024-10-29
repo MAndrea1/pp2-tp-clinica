@@ -38,18 +38,20 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.btnCancelarTuno = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.cbxTurnos = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // btnPagar
             // 
-            this.btnPagar.Location = new System.Drawing.Point(604, 289);
+            this.btnPagar.Location = new System.Drawing.Point(526, 278);
             this.btnPagar.Name = "btnPagar";
-            this.btnPagar.Size = new System.Drawing.Size(86, 26);
+            this.btnPagar.Size = new System.Drawing.Size(86, 40);
             this.btnPagar.TabIndex = 0;
-            this.btnPagar.Text = "PAGAR";
+            this.btnPagar.Text = "BUSCAR TURNO";
             this.btnPagar.UseVisualStyleBackColor = true;
+            this.btnPagar.Click += new System.EventHandler(this.btnPagar_Click);
             // 
             // btnConfirmarTurno
             // 
@@ -65,7 +67,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(379, 289);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(175, 20);
+            this.textBox1.Size = new System.Drawing.Size(128, 20);
             this.textBox1.TabIndex = 3;
             // 
             // label1
@@ -128,12 +130,21 @@
             this.btnVolver.UseVisualStyleBackColor = false;
             this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
+            // cbxTurnos
+            // 
+            this.cbxTurnos.FormattingEnabled = true;
+            this.cbxTurnos.Location = new System.Drawing.Point(633, 289);
+            this.cbxTurnos.Name = "cbxTurnos";
+            this.cbxTurnos.Size = new System.Drawing.Size(155, 21);
+            this.cbxTurnos.TabIndex = 10;
+            // 
             // frmAcreditacionTurno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.cbxTurnos);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnCancelarTuno);
             this.Controls.Add(this.pictureBox2);
@@ -163,5 +174,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btnCancelarTuno;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.ComboBox cbxTurnos;
     }
 }

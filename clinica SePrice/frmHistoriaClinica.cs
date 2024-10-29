@@ -1,4 +1,5 @@
-﻿using System;
+﻿using clinica_SePrice.Entidades;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,20 +14,20 @@ namespace clinica_SePrice
 {
     public partial class frmHistoriaClinica : Form
     {
-        private DataTable pacienteData;
-        public frmHistoriaClinica(DataTable data)
+        private Paciente pacienteData;
+        public frmHistoriaClinica(Paciente data)
         {
             InitializeComponent();
             pacienteData = data;
 
 
-            if (pacienteData.Rows.Count > 0)
+            if (pacienteData != null)
             {
-                lblNombre.Text = pacienteData.Rows[0]["Nombre"].ToString();
-                lblApellido.Text = pacienteData.Rows[0]["Apellido"].ToString();
-                lblDNI.Text = pacienteData.Rows[0]["Dni"].ToString();
-                lblGenero.Text = pacienteData.Rows[0]["Genero"].ToString();
-                lblPrepaga.Text = (bool)pacienteData.Rows[0]["Prepaga"] ? "Sí" : "No";
+                lblNombre.Text = pacienteData.Nombre;
+                lblApellido.Text = pacienteData.Apellido;
+                lblDNI.Text = pacienteData.Dni.ToString();
+                lblGenero.Text = pacienteData.Genero;
+                lblPrepaga.Text = (bool)pacienteData.Prepaga ? "Sí" : "No";
             }
         }
     private void btnVolver_Click(object sender, EventArgs e)

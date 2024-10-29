@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using clinica_SePrice.Entidades;
 
 namespace clinica_SePrice.Datos
 {
@@ -49,10 +50,9 @@ namespace clinica_SePrice.Datos
                 }
             }
         }
-
-        public DataTable BuscarPaciente(int dni)
+        public Paciente BuscarPaciente(int dni)
         {
-            DataTable pacienteData = new DataTable();
+            Paciente paciente = null;
 
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
             {
@@ -71,13 +71,24 @@ namespace clinica_SePrice.Datos
 
                         using (MySqlDataReader reader = comando.ExecuteReader())
                         {
-                            pacienteData.Load(reader); // Cargar los resultados en el DataTable
+                            if (reader.Read())
+                            {
+                                paciente = new Paciente
+                                {
+                                    Nombre = reader["Nombre"].ToString(),
+                                    Apellido = reader["Apellido"].ToString(),
+                                    Dni = Convert.ToInt32(reader["Dni"]),
+                                    Genero = reader["Genero"].ToString(),
+                                    Nacionalidad = reader["Nacionalidad"].ToString(),
+                                    Prepaga = Convert.ToBoolean(reader["Prepaga"])
+                                };
+                            }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw ex; // Manejo de excepciones
+                    throw ex;
                 }
                 finally
                 {
@@ -88,7 +99,7 @@ namespace clinica_SePrice.Datos
                 }
             }
 
-            return pacienteData; // Retornar los datos del paciente
+            return paciente;
         }
     }
 }
