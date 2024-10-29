@@ -68,6 +68,7 @@ namespace clinica_SePrice
                     {
                         MessageBox.Show("No hay turnos para el paciente.");
                     }
+                    ActualizarListaDeTurnos();
                 }
                 catch (Exception ex)
                 {
@@ -79,5 +80,53 @@ namespace clinica_SePrice
                 MessageBox.Show("Por favor, ingrese un D.N.I. válido.");
             }
         }
+
+        private void btnCancelarTuno_Click(object sender, EventArgs e)
+        {
+            if (cbxTurnos.SelectedValue != null)
+            {
+                int codTurno = (int)cbxTurnos.SelectedValue;
+                var pagos = new Pagos();
+
+                try
+                {
+                    pagos.CancelarTurno(codTurno);
+                    MessageBox.Show("Turno cancelado con éxito.");
+
+                 
+                    ActualizarListaDeTurnos();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al cancelar el turno: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un turno.");
+            }
+        }
+
+        private void ActualizarListaDeTurnos()
+        {
+            if (int.TryParse(textBox1.Text, out int dni))
+            {
+                var pagos = new Pagos();
+                try
+                {
+                    var listaCitas = pagos.ObtenerTurnosPorPaciente(dni);
+                    cbxTurnos.DataSource = listaCitas;
+                    cbxTurnos.DisplayMember = "Display";
+                    cbxTurnos.ValueMember = "CodTurno";
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al actualizar la lista de turnos: {ex.Message}");
+                }
+            }
+        }
+
+
+
     }
 }

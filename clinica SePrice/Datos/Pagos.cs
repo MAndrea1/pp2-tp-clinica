@@ -153,5 +153,47 @@ namespace clinica_SePrice.Datos
                 }
             }
         }
+
+        public void CancelarTurno(int codTurno)
+        {
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+                try
+                {
+                    using (MySqlCommand comando = new MySqlCommand("CancelarTurno", conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("@p_CodTurno", codTurno);
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 }

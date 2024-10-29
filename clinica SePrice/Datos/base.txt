@@ -267,3 +267,10 @@ BEGIN
     WHERE CodTurno = p_CodTurno AND Acreditacion = FALSE;
 END;
 //
+DELIMITER //
+DROP PROCEDURE IF EXISTS CancelarTurno //
+CREATE PROCEDURE CancelarTurno(IN p_CodTurno INT)
+BEGIN
+    DELETE FROM turnos WHERE CodTurno = p_CodTurno;
+END;
+//
