@@ -186,4 +186,21 @@ BEGIN
     END IF;
 END;
 //
-DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE BuscarTurnosPorPaciente(IN p_Dni INT)
+BEGIN
+    SELECT CodTurno, FechaTurno, HorarioTurno, Acreditacion
+    FROM turnos
+    WHERE Dni = p_Dni;
+END;
+//
+
+DELIMITER //
+CREATE PROCEDURE AcreditarTurno(IN p_CodTurno INT)
+BEGIN
+    UPDATE turnos
+    SET Acreditacion = TRUE
+    WHERE CodTurno = p_CodTurno AND Acreditacion = FALSE;
+END;
+//

@@ -21,7 +21,26 @@ namespace clinica_SePrice
 
         private void btnConfirmarTurno_Click(object sender, EventArgs e)
         {
+            if (cbxTurnos.SelectedValue != null)
+            {
+                int codCita = (int)cbxTurnos.SelectedValue;
+                var pagos = new Pagos();
 
+                try
+                {
+                    // Actualizar la acreditación del turno
+                    pagos.AcreditarTurno(codCita);
+                    MessageBox.Show("Acreditación realizada con éxito.");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al acreditar el turno: {ex.Message}");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un turno.");
+            }
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
@@ -41,14 +60,13 @@ namespace clinica_SePrice
 
                 try
                 {
-                    var (costo, codTurno, fechaTurno, horarioTurno, acreditacion, mensaje) = pagos.ProcesarPago(dni);
-                    if (!string.IsNullOrEmpty(mensaje))
+                    var listaCitas = pagos.ObtenerTurnosPorPaciente(dni);
+                    cbxTurnos.DataSource = listaCitas;
+                    cbxTurnos.DisplayMember = "Display";
+                    cbxTurnos.ValueMember = "CodTurno"; 
+                    if (listaCitas.Count == 0)
                     {
-                        MessageBox.Show(mensaje); MessageBox.Show(mensaje);
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Pago procesado. Costo: ${costo}\nTurno: {codTurno}\nFecha: {fechaTurno.ToShortDateString()}\nHorario: {horarioTurno}\nAcreditación: {acreditacion}");
+                        MessageBox.Show("No hay turnos para el paciente.");
                     }
                 }
                 catch (Exception ex)

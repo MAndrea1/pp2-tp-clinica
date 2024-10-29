@@ -14,5 +14,7 @@ namespace clinica_SePrice.Entidades
         public DateTime FechaTurno { get; set; }
         public bool Acreditacion { get; set; }
         public TimeSpan HorarioTurno { get; set; }
+
+        public string Display => $"Turno {CodTurno} - {FechaTurno.ToShortDateString()} {HorarioTurno}";
     }
 }

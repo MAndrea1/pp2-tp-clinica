@@ -31,7 +31,7 @@ namespace clinica_SePrice.Datos
                         comando.CommandType = CommandType.StoredProcedure;
                         comando.Parameters.AddWithValue("@p_Dni", dni);
 
-                        if (conexion.State == ConnectionState.Open)
+                       if (conexion.State == ConnectionState.Open)
                         {
                             conexion.Close();
                         }
@@ -62,7 +62,7 @@ namespace clinica_SePrice.Datos
                 {
                     throw ex;
                 }
-                finally
+               finally
                 {
                     if (conexion.State == ConnectionState.Open)
                     {
@@ -72,6 +72,86 @@ namespace clinica_SePrice.Datos
             }
 
             return (costo, codTurno, fechaTurno, horarioTurno, acreditacion, mensaje);
+        }
+
+        public List<Turno> ObtenerTurnosPorPaciente(int dni)
+        {
+            List<Turno> listaCitas = new List<Turno>();
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+              try { 
+                using (MySqlCommand comando = new MySqlCommand("BuscarTurnosPorPaciente", conexion))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@p_Dni", dni);
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+
+                    using (MySqlDataReader reader = comando.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            listaCitas.Add(new Turno
+                            {
+                                CodTurno = reader.GetInt32("CodTurno"),
+                                FechaTurno = reader.GetDateTime("FechaTurno"),
+                                HorarioTurno = reader.GetTimeSpan("HorarioTurno"),
+                                Acreditacion = reader.GetBoolean("Acreditacion")
+                                // Aquí puedes agregar otras propiedades que necesites
+
+                            });
+                        }
+                    }
+                }
+              }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
+            return listaCitas;
+        }
+        public void AcreditarTurno(int codTurno)
+        {
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+
+                try { 
+                     using (MySqlCommand comando = new MySqlCommand("AcreditarTurno", conexion))
+                     {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("@p_CodTurno", codTurno);
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                      }
+                 }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
         }
     }
 }
