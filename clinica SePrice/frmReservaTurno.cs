@@ -17,21 +17,24 @@ namespace clinica_SePrice
     public partial class frmReservaTurno : Form
     {
         int dniSeleccionado;
+        Especialidad especialidadSeleccionada;
         Medico medicoSeleccionado;
+        Paciente pacienteSeleccionado;
         DateTime fechaSeleccionada;
         TimeSpan? horarioSeleccionado;
 
         public frmReservaTurno()
         {
             InitializeComponent();
-            Medicos medicos = new Medicos();
-            List<Medico> allMedicos = medicos.BuscarTodosLosMedicos();
-            comboBox2.DataSource = allMedicos;
+            Especialidades especialidades = new Especialidades();
+            List<Especialidad> allEspecialidades = especialidades.BuscarTodasLasEspecialidades();
+            comboBoxEspecialidad.DataSource = allEspecialidades;
             fechaSeleccionada = DateTime.Today;
             comboBoxHorario.Enabled = false;
             dateTimePicker1.Enabled = false;
-            comboBox2.Enabled = false;
+            comboBoxMedico.Enabled = false;
             btnGenerarTurno.Enabled = false;
+            comboBoxEspecialidad.Enabled = false;
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -53,7 +56,7 @@ namespace clinica_SePrice
             Turnos turnos = new Turnos();
             List<Turno> turnosPorMedico = turnos.BuscarTurnosPorMedicoYFecha(medicoSeleccionado.CodUsu, fechaSeleccionada);
 
-            // Define available times
+            // Horarios disponibles
             TimeSpan startMorning = new TimeSpan(9, 0, 0);
             TimeSpan endMorning = new TimeSpan(12, 0, 0);
             TimeSpan startAfternoon = new TimeSpan(13, 30, 0);
@@ -61,8 +64,8 @@ namespace clinica_SePrice
 
             List<TimeSpan> availableAppointments = new List<TimeSpan>();
 
-            // Generate 15-minute intervals for the morning and afternoon sessions
-            TimeSpan interval = TimeSpan.FromMinutes(15);
+            // Generar intervalos según especialidad
+            TimeSpan interval = TimeSpan.FromMinutes(especialidadSeleccionada.Intervalo);
             for (TimeSpan time = startMorning; time < endMorning; time += interval)
             {
                 availableAppointments.Add(time);
@@ -72,22 +75,20 @@ namespace clinica_SePrice
                 availableAppointments.Add(time);
             }
 
-            // Filter out times that already have appointments
+            // Filtrar intervalos con turnos registrados
             List<TimeSpan> bookedAppointments = turnosPorMedico.Select(t => t.HorarioTurno).ToList();
             List<TimeSpan> freeAppointments = availableAppointments
                 .Where(t => !bookedAppointments.Contains(t))
                 .ToList();
 
-            // Check if there are no available appointments
+            // Limpiar los horarios si no hay turnos disponibles
             if (freeAppointments.Count == 0)
             {
-                // Clear the ComboBox selection if no appointments are available
-                comboBoxHorario.SelectedItem = null; // Assuming comboBox is your ComboBox control
+                comboBoxHorario.SelectedItem = null;
             }
             else
             {
-                // Optionally select the first available appointment
-                comboBoxHorario.SelectedItem = freeAppointments.First(); // Uncomment this line if you want to select the first available appointment
+                comboBoxHorario.SelectedItem = freeAppointments.First();
             }
 
             return freeAppointments;
@@ -105,8 +106,6 @@ namespace clinica_SePrice
             if (((ComboBox)sender).SelectedItem != null)
             {
                 horarioSeleccionado = (TimeSpan)((ComboBox)sender).SelectedItem;
-
-                // Enable the button based on your criteria
                 btnGenerarTurno.Enabled = dniSeleccionado > 0 && medicoSeleccionado != null && horarioSeleccionado != default(TimeSpan);
             }
             else
@@ -119,12 +118,13 @@ namespace clinica_SePrice
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            LabelPacienteEncontrado.Text = "";
             int dni;
             if (int.TryParse(textBox1.Text, out dni))
             {
                 dniSeleccionado = dni;
                 comboBoxHorario.Enabled = false;
-                comboBox2.Enabled = false;
+                comboBoxMedico.Enabled = false;
             }
             else
             {
@@ -135,16 +135,17 @@ namespace clinica_SePrice
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             Pacientes pacientes = new Pacientes();
-            Paciente paciente = pacientes.BuscarPaciente(dniSeleccionado);
+            pacienteSeleccionado = pacientes.BuscarPaciente(dniSeleccionado);
 
-            if (paciente != null) {
+            if (pacienteSeleccionado != null) {
                 dateTimePicker1.Enabled = true;
-                comboBox2.Enabled = true;
-                MessageBox.Show("Patient found", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                comboBoxEspecialidad.Enabled = true;
+                LabelPacienteEncontrado.Text = pacienteSeleccionado.Nombre + " " + pacienteSeleccionado.Apellido;
+                MessageBox.Show("Paciente encontrado", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Patient not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Paciente no registrado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -173,6 +174,18 @@ namespace clinica_SePrice
             frmAdministrativoMenu.ShowDialog();
 
             this.Close();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            especialidadSeleccionada = (Especialidad)((ComboBox)sender).SelectedValue;
+
+            comboBoxMedico.Enabled = especialidadSeleccionada != null;
+
+            Medicos medicos = new Medicos();
+            List<Medico> allMedicos = medicos.BuscarMedicosPorEspecialidad(especialidadSeleccionada.CodEsp);
+            comboBoxMedico.DataSource = allMedicos;
+
         }
     }
 }

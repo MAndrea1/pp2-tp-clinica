@@ -23,21 +23,41 @@ constraint fk_usuario foreign key(RolUsu) references roles(RolUsu)
 
 insert into usuario(CodUsu,NombreUsu,PassUsu,RolUsu) values
 (1,'Admin','123',120),
-(2,'Medico','123',121),
-(3,'Med','123',121);
+(2, 'Med1','123',121),
+(3, 'Med2','123',121),
+(4, 'Med3','123',121),
+(5, 'Med4','123',121),
+(6, 'Med5','123',121);
+
+create table especialidades(
+CodEsp int,
+NomEsp varchar(30),
+Intervalo int,
+constraint primary key(CodEsp)
+);
+
+insert into especialidades values
+(1,'Cardiologia', 15),
+(2,'Pediatria', 15),
+(3,'fisio kinesiologia', 25),
+(4,'salud mental', 30);
 
 CREATE TABLE medicos (
     CodUsu int,
     Nombre varchar(30),
     Apellido varchar(30),
-    Especialidad varchar(50),
+    CodEsp int,
     constraint pk_medicos primary key (CodUsu),
-    constraint fk_medicos_usuario foreign key (CodUsu) references usuario(CodUsu)
+    constraint fk_medicos_usuario foreign key (CodUsu) references usuario(CodUsu),
+    constraint fk_medicos_especialidad foreign key (CodEsp) references especialidades(CodEsp)
 );
 
-INSERT INTO medicos (CodUsu, Nombre, Apellido, Especialidad) VALUES
-(2, 'Maria', 'Fernandez', 'Cardiología'),
-(3, 'Laura', 'Gomez', 'Pediatría');
+INSERT INTO medicos (CodUsu, Nombre, Apellido, CodEsp) VALUES
+(2, 'Maria', 'Fernandez', 1),
+(3, 'Laura', 'Gomez', 2),
+(4, 'Ramona', 'Gamez', 3),
+(5, 'Pamela', 'Rios', 4),
+(6, 'Josefina', 'Rios', 1);
 
 create table pacientes(
     Nombre varchar(30),
@@ -110,10 +130,53 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS BuscarTodosLosMedicos //
 CREATE PROCEDURE BuscarTodosLosMedicos()
 BEGIN
-    SELECT CodUsu, Nombre, Apellido, Especialidad
-    FROM medicos;
+    SELECT 
+        m.CodUsu, 
+        m.Nombre, 
+        m.Apellido, 
+        e.CodEsp, 
+        e.NomEsp, 
+        e.Intervalo
+    FROM 
+        medicos m
+    INNER JOIN 
+        especialidades e ON m.CodEsp = e.CodEsp;
 END;
 //
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTodosLosMedicosPorEspecialidad //
+CREATE PROCEDURE BuscarTodosLosMedicosPorEspecialidad(IN inputCodEsp INT)
+BEGIN
+    SELECT 
+        m.CodUsu, 
+        m.Nombre, 
+        m.Apellido, 
+        e.CodEsp, 
+        e.NomEsp, 
+        e.Intervalo
+    FROM 
+        medicos m
+    INNER JOIN 
+        especialidades e ON m.CodEsp = e.CodEsp
+    WHERE 
+        e.CodEsp = inputCodEsp;
+END;
+//
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTodasLasEspecialidades //
+CREATE PROCEDURE BuscarTodasLasEspecialidades()
+BEGIN
+    SELECT 
+        CodEsp, 
+        NomEsp, 
+        Intervalo
+    FROM 
+        especialidades;
+END;
+//
+
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS InsertarTurno //
