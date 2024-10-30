@@ -116,6 +116,7 @@
             this.btnCancelarTuno.TabIndex = 8;
             this.btnCancelarTuno.Text = "CANCELAR TURNO";
             this.btnCancelarTuno.UseVisualStyleBackColor = true;
+            this.btnCancelarTuno.Click += new System.EventHandler(this.btnCancelarTuno_Click);
             // 
             // btnVolver
             // 
