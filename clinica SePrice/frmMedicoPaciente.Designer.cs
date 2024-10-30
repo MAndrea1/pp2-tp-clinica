@@ -30,13 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMedicoPaciente));
             this.btnVerHistoriaClinica = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtDniPaciente = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnLimpiar = new System.Windows.Forms.Button();
             this.btnSalir = new System.Windows.Forms.Button();
-            this.btnVerPaciente = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,19 +48,6 @@
             this.btnVerHistoriaClinica.Text = "Ver Historia Clinica";
             this.btnVerHistoriaClinica.UseVisualStyleBackColor = true;
             this.btnVerHistoriaClinica.Click += new System.EventHandler(this.btnVerHistoriaClinica_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(32, 248);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 21);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Proximo Paciente";
-            this.label1.UseMnemonic = false;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // pictureBox1
             // 
@@ -101,6 +86,7 @@
             this.btnLimpiar.TabIndex = 8;
             this.btnLimpiar.Text = "BORRAR";
             this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
             // 
             // btnSalir
             // 
@@ -114,28 +100,17 @@
             this.btnSalir.Text = "SALIR";
             this.btnSalir.UseVisualStyleBackColor = false;
             // 
-            // btnVerPaciente
-            // 
-            this.btnVerPaciente.Location = new System.Drawing.Point(251, 248);
-            this.btnVerPaciente.Name = "btnVerPaciente";
-            this.btnVerPaciente.Size = new System.Drawing.Size(75, 23);
-            this.btnVerPaciente.TabIndex = 11;
-            this.btnVerPaciente.Text = "VER";
-            this.btnVerPaciente.UseVisualStyleBackColor = true;
-            // 
             // frmMedicoPaciente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnVerPaciente);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnLimpiar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtDniPaciente);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnVerHistoriaClinica);
             this.Name = "frmMedicoPaciente";
             this.Text = "frmMedicoPaciente";
@@ -147,12 +122,10 @@
 
         #endregion
         private System.Windows.Forms.Button btnVerHistoriaClinica;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtDniPaciente;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnLimpiar;
         private System.Windows.Forms.Button btnSalir;
-        private System.Windows.Forms.Button btnVerPaciente;
     }
 }

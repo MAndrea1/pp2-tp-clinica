@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Mysqlx.Crud.Order.Types;
-
-namespace clinica_SePrice.Entidades
+﻿namespace clinica_SePrice.Entidades
 {
     public class Medico
     {

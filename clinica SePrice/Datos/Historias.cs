@@ -1,99 +1,36 @@
 ﻿using MySql.Data.MySqlClient;
-using System.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using clinica_SePrice.Entidades;
 
 namespace clinica_SePrice.Datos
 {
-    internal class Medicos
+    internal class Historias
     {
-        public List<Medico> BuscarTodosLosMedicos()
-        {
-            return ObtenerMedicos("BuscarTodosLosMedicos", null);
-        }
-
-        public List<Medico> BuscarMedicosPorEspecialidad(int codEsp)
+        public List<Historia> BuscarHistoriasPorDniYMedico(int dni, int codUsu)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "@inputCodEsp", codEsp }
+                { "@patientDni", dni },
+                { "@doctorCodUsu", codUsu }
             };
-            return ObtenerMedicos("BuscarTodosLosMedicosPorEspecialidad", parameters);
+            return ObtenerHistorias("GetHistoriasByDniAndCodUsu", parameters);
         }
 
-        public Medico BuscarMedicoPorId(int codUsu)
+        public void ActualizarDetallesHistoria(int codTurno, string nuevosDetalles)
         {
             var parameters = new Dictionary<string, object>
             {
-                { "@p_CodUsu", codUsu }
+                { "@turnoCod", codTurno },
+                { "@newDetalles", nuevosDetalles }
             };
-            DataTable medicoData = new DataTable();
-
-            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
-            {
-                try
-                {
-                    using (MySqlCommand comando = new MySqlCommand("BuscarMedicoPorId", conexion))
-                    {
-                        comando.CommandType = CommandType.StoredProcedure;
-
-                        // Add parameters
-                        foreach (var param in parameters)
-                        {
-                            comando.Parameters.AddWithValue(param.Key, param.Value);
-                        }
-
-                        if (conexion.State == ConnectionState.Open)
-                        {
-                            conexion.Close();
-                        }
-                        conexion.Open();
-
-                        using (MySqlDataReader reader = comando.ExecuteReader())
-                        {
-                            medicoData.Load(reader);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    if (conexion.State == ConnectionState.Open)
-                    {
-                        conexion.Close();
-                    }
-                }
-            }
-
-            if (medicoData.Rows.Count > 0)
-            {
-                DataRow item = medicoData.Rows[0];
-                var especialidad = new Especialidad
-                {
-                    CodEsp = int.Parse(item["CodEsp"].ToString()),
-                    NomEsp = item["NomEsp"].ToString(),
-                    Intervalo = int.Parse(item["Intervalo"].ToString())
-                };
-
-                return new Medico()
-                {
-                    CodUsu = int.Parse(item["CodUsu"].ToString()),
-                    Nombre = item["Nombre"].ToString(),
-                    Apellido = item["Apellido"].ToString(),
-                    Especialidad = especialidad
-                };
-            }
-
-            return null;
+            EjecutarProcedimiento("UpdateHistoriaDetalles", parameters);
         }
 
-        private List<Medico> ObtenerMedicos(string storedProcedureName, Dictionary<string, object> parameters)
+        private List<Historia> ObtenerHistorias(string storedProcedureName, Dictionary<string, object> parameters)
         {
-            DataTable medicosData = new DataTable();
+            DataTable historiasData = new DataTable();
 
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
             {
@@ -103,7 +40,6 @@ namespace clinica_SePrice.Datos
                     {
                         comando.CommandType = CommandType.StoredProcedure;
 
-                        // Add parameters if any are provided
                         if (parameters != null)
                         {
                             foreach (var param in parameters)
@@ -120,7 +56,7 @@ namespace clinica_SePrice.Datos
 
                         using (MySqlDataReader reader = comando.ExecuteReader())
                         {
-                            medicosData.Load(reader);
+                            historiasData.Load(reader);
                         }
                     }
                 }
@@ -137,26 +73,69 @@ namespace clinica_SePrice.Datos
                 }
             }
 
-            List<Medico> medicos = new List<Medico>();
-            foreach (DataRow item in medicosData.Rows)
+            List<Historia> historias = new List<Historia>();
+            foreach (DataRow item in historiasData.Rows)
             {
-                var especialidad = new Especialidad
+                var turno = new Turno()
                 {
-                    CodEsp = int.Parse(item["CodEsp"].ToString()),
-                    NomEsp = item["NomEsp"].ToString(),
-                    Intervalo = int.Parse(item["Intervalo"].ToString())
+                    CodTurno = int.Parse(item["CodTurno"].ToString()),
+                    Dni = int.Parse(item["Dni"].ToString()),
+                    CodUsu = int.Parse(item["CodUsu"].ToString()),
+                    FechaTurno = DateTime.Parse(item["FechaTurno"].ToString()),
+                    Acreditacion = bool.Parse(item["Acreditacion"].ToString()),
+                    HorarioTurno = TimeSpan.Parse(item["HorarioTurno"].ToString())
                 };
 
-                medicos.Add(new Medico()
+                historias.Add(new Historia()
                 {
-                    CodUsu = int.Parse(item["CodUsu"].ToString()),
-                    Nombre = item["Nombre"].ToString(),
-                    Apellido = item["Apellido"].ToString(),
-                    Especialidad = especialidad
+                    CodTurno = turno.CodTurno,
+                    Detalles = item["Detalles"].ToString(),
+                    Turno = turno
                 });
             }
 
-            return medicos;
+            return historias;
+        }
+
+        private void EjecutarProcedimiento(string storedProcedureName, Dictionary<string, object> parameters)
+        {
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+                try
+                {
+                    using (MySqlCommand comando = new MySqlCommand(storedProcedureName, conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+
+                        if (parameters != null)
+                        {
+                            foreach (var param in parameters)
+                            {
+                                comando.Parameters.AddWithValue(param.Key, param.Value);
+                            }
+                        }
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+
+                        comando.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
         }
     }
 }

@@ -101,15 +101,18 @@
   <ItemGroup>
     <Compile Include="Datos\conexion.cs" />
     <Compile Include="Datos\Especialidades.cs" />
+    <Compile Include="Datos\Historias.cs" />
     <Compile Include="Datos\Medicos.cs" />
     <Compile Include="Datos\Pagos.cs" />
     <Compile Include="Datos\Turnos.cs" />
     <Compile Include="Datos\Pacientes.cs" />
-    <Compile Include="Datos\Usuario.cs" />
+    <Compile Include="Datos\Usuarios.cs" />
     <Compile Include="Entidades\Especialidad.cs" />
+    <Compile Include="Entidades\Historia.cs" />
     <Compile Include="Entidades\Paciente.cs" />
     <Compile Include="Entidades\Medico.cs" />
     <Compile Include="Entidades\Turno.cs" />
+    <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +195,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmHistoriaClinica.resx">
       <DependentUpon>frmHistoriaClinica.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="frmListadoPacientesAtendidos.resx">
       <DependentUpon>frmListadoPacientesAtendidos.cs</DependentUpon>

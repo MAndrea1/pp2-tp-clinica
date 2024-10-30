@@ -16,5 +16,10 @@ namespace clinica_SePrice.Entidades
         public TimeSpan HorarioTurno { get; set; }
 
         public string Display => $"Turno {CodTurno} - {FechaTurno.ToShortDateString()} {HorarioTurno}";
+
+        public override string ToString()
+        {
+            return $"{this.CodTurno}";
+        }
     }
 }
