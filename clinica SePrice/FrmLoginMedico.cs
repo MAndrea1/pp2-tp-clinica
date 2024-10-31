@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Forms;
 using clinica_SePrice.Datos;
-
+using clinica_SePrice.Entidades;
 
 namespace clinica_SePrice
 {
@@ -15,24 +14,37 @@ namespace clinica_SePrice
 
         private void BtnIngresar_Click(object sender, EventArgs e)
         {
-            DataTable dataTable = new DataTable();
-            Usuario usuario = new Usuario();
+            Usuarios usuarios = new Usuarios();
+            usuarios.Log_Usu(txtUsuarioMedico.Text, txtPasswordMedico.Text, 121);
 
             // Llamar al método Log_Usu que ejecuta el procedure de la DB
-            dataTable = usuario.Log_Usu(txtUsuarioMedico.Text, txtPasswordMedico.Text, 121);
+            Usuario usuario = usuarios.Log_Usu(txtUsuarioMedico.Text, txtPasswordMedico.Text, 121);
+
+            // Obtener el usuario medico
+            Medicos medicos = new Medicos();
+            Medico medico = medicos.BuscarMedicoPorId(usuario.CodUsu);
 
             // Validar que devuelva algo
-            if (dataTable.Rows.Count > 0)
+            if (medico != null)
             {
                 // Crear y empezar un nuevo subproceso para abrir el menú del médico
-                frmMedicoPaciente frmMedicoPaciente = new frmMedicoPaciente();
-                frmMedicoPaciente.ShowDialog();
                 this.Close();
+                frmMedicoPaciente frmMedicoPaciente = new frmMedicoPaciente(medico);
+                frmMedicoPaciente.ShowDialog();
+                
             }
             else
             {
                 MessageBox.Show("Usuario y/o contraseña incorrecto");
             }
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.ShowDialog();
+            
         }
     }
 }

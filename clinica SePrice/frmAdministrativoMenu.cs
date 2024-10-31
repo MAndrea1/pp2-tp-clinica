@@ -12,6 +12,8 @@ namespace clinica_SePrice
 {
     public partial class frmAdministrativoMenu : Form
     {
+
+
         public frmAdministrativoMenu()
         {
             InitializeComponent();
@@ -22,34 +24,31 @@ namespace clinica_SePrice
             frmListadoPacientesAtendidos frmlistadopacientesatendidos = new frmListadoPacientesAtendidos();
 
             frmlistadopacientesatendidos.Show();
-            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             frmAcreditacionTurno frmacreditacionturno = new frmAcreditacionTurno();
-
             frmacreditacionturno.Show();
-            this.Hide();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             frmReservaTurno frmReservaTurno = new frmReservaTurno();
             frmReservaTurno.Show();
-            this.Hide();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             frmRegistroPcientes frmRegistroPcientes = new frmRegistroPcientes();
             frmRegistroPcientes.Show();
-            this.Hide();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.Show();
+            this.Close();
         }
     }
 }

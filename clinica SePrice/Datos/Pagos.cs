@@ -13,7 +13,6 @@ namespace clinica_SePrice.Datos
     internal class Pagos
     {
 
-
         public (int costo, int codTurno, DateTime fechaTurno, TimeSpan horarioTurno, bool acreditacion, string mensaje) ProcesarPago(int dni)
         {
             int costo = 0;

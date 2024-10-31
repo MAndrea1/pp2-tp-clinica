@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Data;
+using clinica_SePrice.Entidades;
 using MySql.Data.MySqlClient;
 
 namespace clinica_SePrice.Datos
 {
-    internal class Usuario
+    internal class Usuarios
     {
-
-        public DataTable Log_Usu(string L_Usu, string P_Usu, int rolUsu)
+        public Usuario Log_Usu(string L_Usu, string P_Usu, int rolUsu)
         {
-            DataTable tabla = new DataTable();
+            Entidades.Usuario usuario = null;
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
             {
                 try
@@ -29,8 +29,21 @@ namespace clinica_SePrice.Datos
 
                         using (MySqlDataReader resultado = comando.ExecuteReader())
                         {
-                            tabla.Load(resultado);
-                            return tabla;
+                            if (resultado.Read())
+                            {
+                                usuario = new Entidades.Usuario
+                                {
+                                    CodUsu = Convert.ToInt32(resultado["CodUsu"]),
+                                    NombreUsu = L_Usu,
+                                    PassUsu = P_Usu,
+                                    Rol = new Rol
+                                    {
+                                        RolUsu = rolUsu,
+                                        // You might need to fetch NomRol separately if it's not in this procedure's result set
+                                        NomRol = (rolUsu == 120) ? "Administrador" : "Medico"
+                                    }
+                                };
+                            }
                         }
                     }
                 }
@@ -46,7 +59,7 @@ namespace clinica_SePrice.Datos
                     }
                 }
             }
-
+            return usuario;
         }
     }
 }

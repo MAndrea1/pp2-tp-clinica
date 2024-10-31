@@ -1,22 +1,17 @@
 ﻿using clinica_SePrice.Datos;
 using clinica_SePrice.Entidades;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace clinica_SePrice
 {
     public partial class frmMedicoPaciente : Form
     {
-        public frmMedicoPaciente()
+        private Medico medico;
+        public frmMedicoPaciente(Medico medico)
         {
             InitializeComponent();
+            this.medico = medico;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -33,9 +28,8 @@ namespace clinica_SePrice
 
                 if (resultado != null)
                 {
-                    frmHistoriaClinica frmHistoriaClinica = new frmHistoriaClinica( resultado);
+                    frmHistoriaClinica frmHistoriaClinica = new frmHistoriaClinica(resultado, medico);
                     frmHistoriaClinica.ShowDialog();
-                    this.Hide();
                 }
             }
 
@@ -43,6 +37,20 @@ namespace clinica_SePrice
             {
                 MessageBox.Show("El paciente no se encuentra registrado");
             }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtDniPaciente.Text = "";
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.Show();
+
+
         }
     }
 }

@@ -71,6 +71,7 @@ create table pacientes(
 
 INSERT INTO pacientes (Nombre, Apellido, Dni, Genero, Nacionalidad, Prepaga) VALUES
 ('Mario', 'Rodriguez', 25974152, 'Masculino', 'Argentina', true),
+('Agustin', 'Alvarez', 12, 'Masculino', 'Argentina', true),
 ('Esteban', 'Garcia', 42584952, 'Masculino', 'Argentina', false);
 
 CREATE TABLE turnos (
@@ -88,7 +89,21 @@ CREATE TABLE turnos (
 INSERT INTO turnos (CodTurno, Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno) VALUES
 (1, 25974152, 2, '2024-10-25', true, '09:00:00'),
 (2, 42584952, 2, '2024-10-25', true, '14:30:00'),
-(3, 25974152, 3, '2024-11-01', false, '10:00:00');
+(3, 25974152, 3, '2024-11-01', false, '10:00:00'),
+(12, 12, 2, '2024-11-01', false, '10:00:00');
+
+CREATE TABLE historias (
+    CodTurno int,
+    Detalles varchar(500),
+    CONSTRAINT pk_historias PRIMARY KEY (CodTurno),
+    CONSTRAINT fk_historias_turno FOREIGN KEY (CodTurno) REFERENCES turnos(CodTurno)
+);
+
+INSERT INTO historias (CodTurno, Detalles) VALUES
+(1, ''),
+(2, ''),
+(3, 'Diagnostico: sedentarismo'),
+(12, 'Diagnostico: sedentarismo');
 
 delimiter //
 drop procedure if exists IngresoLogin//
@@ -145,6 +160,26 @@ END;
 //
 
 DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarMedicoPorId //
+CREATE PROCEDURE BuscarMedicoPorId(IN p_CodUsu INT)
+BEGIN
+    SELECT 
+        m.CodUsu, 
+        m.Nombre, 
+        m.Apellido, 
+        e.CodEsp, 
+        e.NomEsp, 
+        e.Intervalo
+    FROM 
+        medicos m
+    INNER JOIN 
+        especialidades e ON m.CodEsp = e.CodEsp
+    WHERE 
+        m.CodUsu = p_CodUsu;
+END;
+//
+
+DELIMITER //
 DROP PROCEDURE IF EXISTS BuscarTodosLosMedicosPorEspecialidad //
 CREATE PROCEDURE BuscarTodosLosMedicosPorEspecialidad(IN inputCodEsp INT)
 BEGIN
@@ -188,10 +223,44 @@ CREATE PROCEDURE InsertarTurno(
     IN p_HorarioTurno TIME
 )
 BEGIN
+    DECLARE newCodTurno INT;
+
     INSERT INTO turnos (Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno)
     VALUES (p_Dni, p_CodUsu, p_FechaTurno, p_Acreditacion, p_HorarioTurno);
+    
+    SET newCodTurno = LAST_INSERT_ID();
+
+    INSERT INTO historias (CodTurno, Detalles)
+    VALUES (newCodTurno, '');
 END;
 //
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS EliminarTurno //
+CREATE PROCEDURE EliminarTurno(
+    IN p_CodTurno INT
+)
+BEGIN
+    -- Delete the related Historia first
+    DELETE FROM historias WHERE CodTurno = p_CodTurno;
+
+    -- Now delete the Turno
+    DELETE FROM turnos WHERE CodTurno = p_CodTurno;
+END;
+//
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTurnoPorId //
+CREATE PROCEDURE BuscarTurnoPorId(
+    IN p_CodTurno INT
+)
+BEGIN
+    SELECT CodUsu, Dni, FechaTurno, Acreditacion, HorarioTurno
+    FROM turnos
+    WHERE CodTurno = p_CodTurno;
+END;
+//
+
 
 DELIMITER //
 DROP PROCEDURE IF EXISTS BuscarTurnosPorMedico //
@@ -267,3 +336,31 @@ BEGIN
     WHERE CodTurno = p_CodTurno AND Acreditacion = FALSE;
 END;
 //
+
+DELIMITER //
+CREATE PROCEDURE GetHistoriasByDniAndCodUsu(
+
+    IN patientDni INT,
+    IN doctorCodUsu INT
+)
+BEGIN
+    SELECT h.CodTurno, h.Detalles, t.CodUsu, t.Dni, t.FechaTurno, t.Acreditacion, t.HorarioTurno
+    FROM historias h
+    JOIN turnos t ON h.CodTurno = t.CodTurno
+    WHERE t.Dni = patientDni AND t.CodUsu = doctorCodUsu;
+END //
+
+
+DELIMITER //
+CREATE PROCEDURE UpdateHistoriaDetalles(
+    IN turnoCod INT,
+    IN newDetalles VARCHAR(500)
+)
+BEGIN
+    UPDATE historias
+    SET Detalles = newDetalles
+    WHERE CodTurno = turnoCod;
+END //
+
+DELIMITER ;
+

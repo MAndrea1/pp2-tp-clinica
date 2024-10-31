@@ -8,7 +8,7 @@ namespace clinica_SePrice.Datos
 {
     internal class Turnos
     {
-        // Method to add a new appointment
+
         public bool AgregarTurno(int dni, int codUsu, DateTime fechaTurno, bool acreditacion, TimeSpan horarioTurno)
         {
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
@@ -101,7 +101,7 @@ namespace clinica_SePrice.Datos
 
             return listaTurnos;
         }
-    
+
 
         public List<Turno> BuscarTurnosPorMedicoYFecha(int codUsu, DateTime fechaTurno)
         {
@@ -157,5 +157,91 @@ namespace clinica_SePrice.Datos
 
             return listaTurnos;
         }
+
+        public Turno BuscarTurnoPorId(int codTurno)
+        {
+            Turno turno = null;
+
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+                try
+                {
+                    using (MySqlCommand comando = new MySqlCommand("BuscarTurnoPorId", conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("p_CodTurno", codTurno);
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+
+                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                turno = new Turno
+                                {
+                                    CodUsu = Convert.ToInt32(reader["CodUsu"]),
+                                    Dni = Convert.ToInt32(reader["Dni"]),
+                                    FechaTurno = Convert.ToDateTime(reader["FechaTurno"]),
+                                    Acreditacion = Convert.ToBoolean(reader["Acreditacion"]),
+                                    HorarioTurno = (TimeSpan)reader["HorarioTurno"]
+                                };
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
+
+            return turno;
+        }
+
+        public bool EliminarTurno(int codTurno)
+        {
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+                try
+                {
+                    using (MySqlCommand comando = new MySqlCommand("EliminarTurno", conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("p_CodTurno", codTurno);
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+                        comando.ExecuteNonQuery();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
+        }
+
     }
 }
