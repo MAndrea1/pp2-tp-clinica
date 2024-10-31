@@ -25,11 +25,19 @@ namespace clinica_SePrice
                 // Crear y empezar un nuevo subproceso para abrir del admin
                 frmAdministrativoMenu frmAdministrativoMenu = new frmAdministrativoMenu();
                 frmAdministrativoMenu.ShowDialog();
+                this.Close();
             }
             else
             {
                 MessageBox.Show("Usuario y/o contraseña incorrecto");
             }
+        }
+
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.ShowDialog();
         }
     }
 }

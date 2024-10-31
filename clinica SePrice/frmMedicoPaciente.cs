@@ -30,7 +30,6 @@ namespace clinica_SePrice
                 {
                     frmHistoriaClinica frmHistoriaClinica = new frmHistoriaClinica(resultado, medico);
                     frmHistoriaClinica.ShowDialog();
-                    this.Hide();
                 }
             }
 
@@ -43,6 +42,15 @@ namespace clinica_SePrice
         private void btnLimpiar_Click(object sender, EventArgs e)
         {
             txtDniPaciente.Text = "";
+        }
+
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.Show();
+
+
         }
     }
 }

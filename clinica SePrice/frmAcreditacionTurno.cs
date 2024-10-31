@@ -45,11 +45,7 @@ namespace clinica_SePrice
 
         private void btnVolver_Click(object sender, EventArgs e)
         {
-            frmAdministrativoMenu frmAdministrativoMenu = new frmAdministrativoMenu();
-            frmAdministrativoMenu.ShowDialog();
-           
             this.Close();
-                
         }
 
         private void btnPagar_Click(object sender, EventArgs e)

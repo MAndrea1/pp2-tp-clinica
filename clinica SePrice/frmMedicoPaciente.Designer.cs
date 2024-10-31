@@ -99,6 +99,7 @@
             this.btnSalir.TabIndex = 9;
             this.btnSalir.Text = "SALIR";
             this.btnSalir.UseVisualStyleBackColor = false;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // frmMedicoPaciente
             // 

@@ -46,7 +46,9 @@ namespace clinica_SePrice
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.Show();
+            this.Close();
         }
     }
 }

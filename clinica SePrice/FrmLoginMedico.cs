@@ -28,14 +28,23 @@ namespace clinica_SePrice
             if (medico != null)
             {
                 // Crear y empezar un nuevo subproceso para abrir el menú del médico
+                this.Close();
                 frmMedicoPaciente frmMedicoPaciente = new frmMedicoPaciente(medico);
                 frmMedicoPaciente.ShowDialog();
-                this.Close();
+                
             }
             else
             {
                 MessageBox.Show("Usuario y/o contraseña incorrecto");
             }
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            frmBienvenida frmBienvenida = new frmBienvenida();
+            frmBienvenida.ShowDialog();
+            
         }
     }
 }

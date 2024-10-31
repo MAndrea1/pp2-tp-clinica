@@ -57,7 +57,6 @@
             this.txtUsuarioMedico.Name = "txtUsuarioMedico";
             this.txtUsuarioMedico.Size = new System.Drawing.Size(165, 20);
             this.txtUsuarioMedico.TabIndex = 1;
-           
             // 
             // txtPasswordMedico
             // 
@@ -95,6 +94,18 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 5;
             this.pictureBox2.TabStop = false;
+            // 
+            // btnAceptar
+            // 
+            this.btnAceptar.BackColor = System.Drawing.Color.Teal;
+            this.btnAceptar.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnAceptar.Location = new System.Drawing.Point(497, 357);
+            this.btnAceptar.Name = "btnAceptar";
+            this.btnAceptar.Size = new System.Drawing.Size(96, 38);
+            this.btnAceptar.TabIndex = 8;
+            this.btnAceptar.Text = "VOLVER";
+            this.btnAceptar.UseVisualStyleBackColor = false;
+            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
             // 
             // btnIngresar
             // 
