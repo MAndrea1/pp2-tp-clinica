@@ -288,6 +288,22 @@ END;
 //
 
 DELIMITER //
+DROP PROCEDURE IF EXISTS BuscarTurnosPorMedicoYMes //
+CREATE PROCEDURE BuscarTurnosPorMedicoYMes(
+    IN p_CodUsu INT,
+    IN p_Anio INT,
+    IN p_Mes INT
+)
+BEGIN
+    SELECT CodTurno, Dni, CodUsu, FechaTurno, Acreditacion, HorarioTurno
+    FROM turnos
+    WHERE CodUsu = p_CodUsu
+      AND YEAR(FechaTurno) = p_Anio
+      AND MONTH(FechaTurno) = p_Mes;
+END;
+//
+
+DELIMITER //
 DROP PROCEDURE IF EXISTS ProcesarPago //
 CREATE PROCEDURE ProcesarPago(
     IN p_Dni INT

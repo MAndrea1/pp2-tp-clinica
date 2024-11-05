@@ -102,7 +102,6 @@ namespace clinica_SePrice.Datos
             return listaTurnos;
         }
 
-
         public List<Turno> BuscarTurnosPorMedicoYFecha(int codUsu, DateTime fechaTurno)
         {
             List<Turno> listaTurnos = new List<Turno>();
@@ -242,6 +241,63 @@ namespace clinica_SePrice.Datos
                 }
             }
         }
+
+        public List<Turno> BuscarTurnosPorMedicoYMes(int codUsu, int anio, int mes)
+        {
+            List<Turno> listaTurnos = new List<Turno>();
+
+            using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
+            {
+                try
+                {
+                    using (MySqlCommand comando = new MySqlCommand("BuscarTurnosPorMedicoYMes", conexion))
+                    {
+                        comando.CommandType = CommandType.StoredProcedure;
+                        comando.Parameters.AddWithValue("p_CodUsu", codUsu);
+                        comando.Parameters.AddWithValue("p_Anio", anio);
+                        comando.Parameters.AddWithValue("p_Mes", mes);
+
+                        if (conexion.State == ConnectionState.Open)
+                        {
+                            conexion.Close();
+                        }
+                        conexion.Open();
+
+                        using (MySqlDataReader reader = comando.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Turno turno = new Turno
+                                {
+                                    CodTurno = Convert.ToInt32(reader["CodTurno"]),
+                                    Dni = Convert.ToInt32(reader["Dni"]),
+                                    CodUsu = codUsu,
+                                    FechaTurno = Convert.ToDateTime(reader["FechaTurno"]),
+                                    Acreditacion = Convert.ToBoolean(reader["Acreditacion"]),
+                                    HorarioTurno = (TimeSpan)reader["HorarioTurno"]
+                                };
+
+                                listaTurnos.Add(turno);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    if (conexion.State == ConnectionState.Open)
+                    {
+                        conexion.Close();
+                    }
+                }
+            }
+
+            return listaTurnos;
+        }
+
 
     }
 }
