@@ -9,7 +9,7 @@
 
         public override string ToString()
         {
-            return $"{this.Nombre} {this.Apellido} - {this.Especialidad}";
+            return $"{this.Nombre} {this.Apellido}";
         }
     }
 }

@@ -2,15 +2,8 @@
 {
     partial class frmListadoPacientesAtendidos
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,150 +13,99 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListadoPacientesAtendidos));
-            this.btnBuscar = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.btnCalcularHonorarios = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.cmbMedicos = new System.Windows.Forms.ComboBox();
+            this.cmbEspecialidades = new System.Windows.Forms.ComboBox();
+            this.dgvPacientes = new System.Windows.Forms.DataGridView();
+            this.btnListarPacientes = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnBuscar
+            // cmbMedicos
             // 
-            this.btnBuscar.Location = new System.Drawing.Point(337, 89);
-            this.btnBuscar.Name = "btnBuscar";
-            this.btnBuscar.Size = new System.Drawing.Size(75, 23);
-            this.btnBuscar.TabIndex = 1;
-            this.btnBuscar.Text = "BUSCAR";
-            this.btnBuscar.UseVisualStyleBackColor = true;
+            this.cmbMedicos.FormattingEnabled = true;
+            this.cmbMedicos.Location = new System.Drawing.Point(360, 129);
+            this.cmbMedicos.Name = "cmbMedicos";
+            this.cmbMedicos.Size = new System.Drawing.Size(200, 21);
+            this.cmbMedicos.TabIndex = 0;
+            this.cmbMedicos.SelectedIndexChanged += new System.EventHandler(this.cmbMedicos_SelectedIndexChanged);
             // 
-            // listView1
+            // cmbEspecialidades
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(179, 142);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(233, 263);
-            this.listView1.TabIndex = 2;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.cmbEspecialidades.FormattingEnabled = true;
+            this.cmbEspecialidades.Location = new System.Drawing.Point(360, 192);
+            this.cmbEspecialidades.Name = "cmbEspecialidades";
+            this.cmbEspecialidades.Size = new System.Drawing.Size(200, 21);
+            this.cmbEspecialidades.TabIndex = 1;
             // 
-            // btnCalcularHonorarios
+            // dgvPacientes
             // 
-            this.btnCalcularHonorarios.Location = new System.Drawing.Point(539, 382);
-            this.btnCalcularHonorarios.Name = "btnCalcularHonorarios";
-            this.btnCalcularHonorarios.Size = new System.Drawing.Size(168, 23);
-            this.btnCalcularHonorarios.TabIndex = 3;
-            this.btnCalcularHonorarios.Text = "CALCULAR HONORARIOS";
-            this.btnCalcularHonorarios.UseVisualStyleBackColor = true;
+            this.dgvPacientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPacientes.Location = new System.Drawing.Point(360, 246);
+            this.dgvPacientes.Name = "dgvPacientes";
+            this.dgvPacientes.Size = new System.Drawing.Size(400, 150);
+            this.dgvPacientes.TabIndex = 2;
             // 
-            // comboBox1
+            // btnListarPacientes
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "PEDIATRIA",
-            "CLINICA MEDICA",
-            "CARDIOLOGIA",
-            "GINECOLOGIA",
-            "PSICOLOGIA",
-            "DERMATOLOGIA"});
-            this.comboBox1.Location = new System.Drawing.Point(179, 44);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 4;
+            this.btnListarPacientes.Location = new System.Drawing.Point(397, 429);
+            this.btnListarPacientes.Name = "btnListarPacientes";
+            this.btnListarPacientes.Size = new System.Drawing.Size(75, 23);
+            this.btnListarPacientes.TabIndex = 3;
+            this.btnListarPacientes.Text = "Listar Pacientes";
+            this.btnListarPacientes.UseVisualStyleBackColor = true;
+            this.btnListarPacientes.Click += new System.EventHandler(this.btnListarPacientes_Click);
             // 
-            // label1
+            // btnVolver
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(66, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "ESPECIALIDAD";
+            this.btnVolver.Location = new System.Drawing.Point(665, 429);
+            this.btnVolver.Name = "btnVolver";
+            this.btnVolver.Size = new System.Drawing.Size(75, 23);
+            this.btnVolver.TabIndex = 4;
+            this.btnVolver.Text = "Volver";
+            this.btnVolver.UseVisualStyleBackColor = true;
+            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(539, 142);
+            this.pictureBox1.Location = new System.Drawing.Point(40, 42);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(168, 165);
+            this.pictureBox1.Size = new System.Drawing.Size(165, 171);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(179, 89);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 7;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 98);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "MEDICO";
-            // 
-            // btnVolver
-            // 
-            this.btnVolver.BackColor = System.Drawing.Color.SteelBlue;
-            this.btnVolver.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnVolver.ForeColor = System.Drawing.Color.White;
-            this.btnVolver.Location = new System.Drawing.Point(539, 36);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(86, 38);
-            this.btnVolver.TabIndex = 10;
-            this.btnVolver.Text = "VOLVER";
-            this.btnVolver.UseVisualStyleBackColor = false;
-            this.btnVolver.Click += new System.EventHandler(this.btnVolver_Click);
             // 
             // frmListadoPacientesAtendidos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
+            this.ClientSize = new System.Drawing.Size(852, 538);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.btnCalcularHonorarios);
-            this.Controls.Add(this.listView1);
-            this.Controls.Add(this.btnBuscar);
+            this.Controls.Add(this.btnVolver);
+            this.Controls.Add(this.btnListarPacientes);
+            this.Controls.Add(this.dgvPacientes);
+            this.Controls.Add(this.cmbEspecialidades);
+            this.Controls.Add(this.cmbMedicos);
             this.Name = "frmListadoPacientesAtendidos";
-            this.Text = "frmListadoPacientesAtendidos";
+            this.Text = "Listado de Pacientes Atendidos";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
-        #endregion
-        private System.Windows.Forms.Button btnBuscar;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Button btnCalcularHonorarios;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox cmbMedicos;
+        private System.Windows.Forms.ComboBox cmbEspecialidades;
+        private System.Windows.Forms.DataGridView dgvPacientes;
+        private System.Windows.Forms.Button btnListarPacientes;
         private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
