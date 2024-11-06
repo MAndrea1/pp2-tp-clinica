@@ -39,6 +39,7 @@
             this.btnCancelarTuno = new System.Windows.Forms.Button();
             this.btnVolver = new System.Windows.Forms.Button();
             this.cbxTurnos = new System.Windows.Forms.ComboBox();
+            this.btnPagarBono = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -55,7 +56,7 @@
             // 
             // btnConfirmarTurno
             // 
-            this.btnConfirmarTurno.Location = new System.Drawing.Point(526, 335);
+            this.btnConfirmarTurno.Location = new System.Drawing.Point(482, 335);
             this.btnConfirmarTurno.Name = "btnConfirmarTurno";
             this.btnConfirmarTurno.Size = new System.Drawing.Size(164, 23);
             this.btnConfirmarTurno.TabIndex = 2;
@@ -110,7 +111,7 @@
             // 
             // btnCancelarTuno
             // 
-            this.btnCancelarTuno.Location = new System.Drawing.Point(330, 335);
+            this.btnCancelarTuno.Location = new System.Drawing.Point(652, 335);
             this.btnCancelarTuno.Name = "btnCancelarTuno";
             this.btnCancelarTuno.Size = new System.Drawing.Size(164, 23);
             this.btnCancelarTuno.TabIndex = 8;
@@ -136,15 +137,26 @@
             this.cbxTurnos.FormattingEnabled = true;
             this.cbxTurnos.Location = new System.Drawing.Point(633, 289);
             this.cbxTurnos.Name = "cbxTurnos";
-            this.cbxTurnos.Size = new System.Drawing.Size(155, 21);
+            this.cbxTurnos.Size = new System.Drawing.Size(175, 21);
             this.cbxTurnos.TabIndex = 10;
+            // 
+            // btnPagarBono
+            // 
+            this.btnPagarBono.Location = new System.Drawing.Point(330, 335);
+            this.btnPagarBono.Name = "btnPagarBono";
+            this.btnPagarBono.Size = new System.Drawing.Size(146, 23);
+            this.btnPagarBono.TabIndex = 11;
+            this.btnPagarBono.Text = "PAGAR BONO";
+            this.btnPagarBono.UseVisualStyleBackColor = true;
+            this.btnPagarBono.Click += new System.EventHandler(this.btnPagarBono_Click);
             // 
             // frmAcreditacionTurno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(836, 450);
+            this.Controls.Add(this.btnPagarBono);
             this.Controls.Add(this.cbxTurnos);
             this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.btnCancelarTuno);
@@ -176,5 +188,6 @@
         private System.Windows.Forms.Button btnCancelarTuno;
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.ComboBox cbxTurnos;
+        private System.Windows.Forms.Button btnPagarBono;
     }
 }
