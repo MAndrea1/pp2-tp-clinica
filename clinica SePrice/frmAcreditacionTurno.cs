@@ -198,7 +198,7 @@ namespace clinica_SePrice
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al procesar el pago: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al procesar el pago: por favor , ingrese DNI válido");
             }
         }
     }
