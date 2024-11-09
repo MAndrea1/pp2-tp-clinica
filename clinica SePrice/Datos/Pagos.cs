@@ -8,29 +8,30 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using clinica_SePrice.Entidades;
 using System.Data.SqlClient;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+
+
 namespace clinica_SePrice.Datos
 {
     internal class Pagos
     {
-
-        public (int costo, int codTurno, DateTime fechaTurno, TimeSpan horarioTurno, bool acreditacion, string mensaje) ProcesarPago(int dni)
+        
+        public (int costo, string mensaje) ObtenerCostoTurno(int dni)
         {
             int costo = 0;
-            int codTurno = 0;
-            DateTime fechaTurno = DateTime.MinValue;
-            TimeSpan horarioTurno = TimeSpan.Zero;
-            bool acreditacion = false;
             string mensaje = string.Empty;
+
             using (MySqlConnection conexion = Conexion.GetInstancia().Conectar())
             {
                 try
                 {
-                    using (MySqlCommand comando = new MySqlCommand("ProcesarPago", conexion))
+                    using (MySqlCommand comando = new MySqlCommand("SELECT Prepaga FROM pacientes WHERE Dni = @dni", conexion))
                     {
-                        comando.CommandType = CommandType.StoredProcedure;
-                        comando.Parameters.AddWithValue("@p_Dni", dni);
+                        comando.Parameters.AddWithValue("@dni", dni);
 
-                       if (conexion.State == ConnectionState.Open)
+                        if (conexion.State == ConnectionState.Open)
                         {
                             conexion.Close();
                         }
@@ -40,38 +41,62 @@ namespace clinica_SePrice.Datos
                         {
                             if (reader.Read())
                             {
-                                if (reader["Mensaje"] != DBNull.Value)
-                                {
-                                    mensaje = reader.GetString("Mensaje");
-                                }
-                                else
-                                {
-                                    costo = reader.GetInt32("Costo");
-                                    codTurno = reader.GetInt32("CodTurno");
-                                    fechaTurno = reader.GetDateTime("FechaTurno");
-                                    horarioTurno = reader.GetTimeSpan("HorarioTurno");
-                                    acreditacion = reader.GetBoolean("Acreditacion");
-                                }
+                                bool prepaga = reader.GetBoolean("Prepaga");
+                                costo = prepaga ? 3000 : 10000;
+                                mensaje = "Pago procesado correctamente.";
+                            }
+                            else
+                            {
+                                mensaje = "Paciente no encontrado.";
                             }
                         }
-
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
-                }
-               finally
-                {
-                    if (conexion.State == ConnectionState.Open)
-                    {
-                        conexion.Close();
-                    }
+                    mensaje = $"Error al obtener el costo: {ex.Message}";
                 }
             }
 
-            return (costo, codTurno, fechaTurno, horarioTurno, acreditacion, mensaje);
+            return (costo, mensaje);
         }
+
+        
+        public void GenerarPdfPago(int dni, int costo, DateTime fechaTurno, TimeSpan horarioTurno, string nombrePaciente, string apellidoPaciente)
+        {
+            try
+            {
+                Document doc = new Document();
+                string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"Pago_{dni}_{fechaTurno.ToString("yyyyMMdd")}.pdf");
+
+                PdfWriter.GetInstance(doc, new FileStream(filePath, FileMode.Create));
+
+                doc.Open();
+
+               
+                doc.Add(new Paragraph("Clínica SePrice - Comprobante de Pago"));
+
+                
+                doc.Add(new Paragraph($"Paciente: {nombrePaciente} {apellidoPaciente}"));
+                doc.Add(new Paragraph($"DNI: {dni}"));
+
+                
+                doc.Add(new Paragraph($"Fecha del Turno: {fechaTurno.ToString("dd/MM/yyyy")}"));
+                doc.Add(new Paragraph($"Hora: {horarioTurno.ToString()}"));
+
+                
+                doc.Add(new Paragraph($"Monto: ${costo}"));
+
+                doc.Close();
+
+                MessageBox.Show($"PDF generado exitosamente en {filePath}", "Pago Exitoso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar el PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    
 
         public List<Turno> ObtenerTurnosPorPaciente(int dni)
         {
@@ -100,7 +125,7 @@ namespace clinica_SePrice.Datos
                                 FechaTurno = reader.GetDateTime("FechaTurno"),
                                 HorarioTurno = reader.GetTimeSpan("HorarioTurno"),
                                 Acreditacion = reader.GetBoolean("Acreditacion")
-                                // Aquí puedes agregar otras propiedades que necesites
+                                
 
                             });
                         }
